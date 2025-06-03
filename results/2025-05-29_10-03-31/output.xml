@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.3 on win32)" generated="2025-05-29T10:03:31.341246" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="K:\Documents\Programmierung\swaglabs-tests\tests">
+<suite id="s1-s1" name="Test All Login" source="K:\Documents\Programmierung\swaglabs-tests\tests\test_all_login.robot">
+<test id="s1-s1-t1" name="Test Login With All Users" line="2">
+<for flavor="IN">
+<iter>
+<kw name="Get From Dictionary">
+<var>${password}</var>
+<arg>${PASSWORDS}</arg>
+<arg>${user}</arg>
+<status status="NOT RUN" start="2025-05-29T10:03:31.367755" elapsed="0.000022"/>
+</kw>
+<kw name="Input Valid Credentials">
+<arg>${user}</arg>
+<arg>${password}</arg>
+<status status="NOT RUN" start="2025-05-29T10:03:31.367879" elapsed="0.000015"/>
+</kw>
+<kw name="Click Login Button">
+<status status="NOT RUN" start="2025-05-29T10:03:31.367960" elapsed="0.000012"/>
+</kw>
+<kw name="Page Should Contain Element">
+<arg>id=react-burger-menu-btn</arg>
+<status status="NOT RUN" start="2025-05-29T10:03:31.368022" elapsed="0.000011"/>
+</kw>
+<kw name="Click Element">
+<arg>id=react-burger-menu-btn</arg>
+<status status="NOT RUN" start="2025-05-29T10:03:31.368083" elapsed="0.000011"/>
+</kw>
+<kw name="Click Element">
+<arg>id=logout_sidebar_link</arg>
+<status status="NOT RUN" start="2025-05-29T10:03:31.368144" elapsed="0.000011"/>
+</kw>
+<var name="${user}"/>
+<status status="NOT RUN" start="2025-05-29T10:03:31.367433" elapsed="0.000749"/>
+</iter>
+<msg time="2025-05-29T10:03:31.368210" level="FAIL">Variable '@{VALID_USERS}' not found.</msg>
+<var>${user}</var>
+<value>@{VALID_USERS}</value>
+<status status="FAIL" start="2025-05-29T10:03:31.366769" elapsed="0.001476">Variable '@{VALID_USERS}' not found.</status>
+</for>
+<status status="FAIL" start="2025-05-29T10:03:31.366523" elapsed="0.001902">Variable '@{VALID_USERS}' not found.</status>
+</test>
+<status status="FAIL" start="2025-05-29T10:03:31.365582" elapsed="0.003371"/>
+</suite>
+<suite id="s1-s2" name="Test Logout" source="K:\Documents\Programmierung\swaglabs-tests\tests\test_logout.robot">
+<kw name="Open Browser To Login Page" owner="login_keywords" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:03:31.621137" level="INFO">Opening browser 'Chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${LOGIN_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-05-29T10:03:31.620949" elapsed="1.477808"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-05-29T10:03:33.098968" elapsed="0.041267"/>
+</kw>
+<status status="PASS" start="2025-05-29T10:03:31.620601" elapsed="1.519873"/>
+</kw>
+<test id="s1-s2-t1" name="Valid User Can Logout" line="9">
+<kw name="Login With Valid Credentials" owner="login_keywords">
+<kw name="Input Valid Credentials" owner="login_keywords">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:03:33.142284" level="INFO">Typing text 'standard_user' into text field 'id=user-name'.</msg>
+<arg>id=user-name</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T10:03:33.141915" elapsed="0.124326"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:03:33.266686" level="INFO">Typing text 'secret_sauce' into text field 'id=password'.</msg>
+<arg>id=password</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T10:03:33.266444" elapsed="0.069052"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="PASS" start="2025-05-29T10:03:33.141659" elapsed="0.194043"/>
+</kw>
+<kw name="Click Login Button" owner="login_keywords">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:03:33.336313" level="INFO">Clicking button 'id=login-button'.</msg>
+<arg>id=login-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T10:03:33.336133" elapsed="0.083191"/>
+</kw>
+<status status="PASS" start="2025-05-29T10:03:33.335890" elapsed="0.083618"/>
+</kw>
+<arg>standard_user</arg>
+<arg>secret_sauce</arg>
+<status status="PASS" start="2025-05-29T10:03:33.141320" elapsed="0.278260"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:03:33.420287" level="INFO">Clicking element 'id=react-burger-menu-btn'.</msg>
+<arg>id=react-burger-menu-btn</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T10:03:33.419958" elapsed="0.047664"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:03:33.468184" level="INFO">Clicking element 'id=logout_sidebar_link'.</msg>
+<msg time="2025-05-29T10:03:33.910262" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-05-29T10:03:33.910431" level="FAIL">ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=137.0.7151.41)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff639216f65+78965]
+	GetHandleVerifier [0x0x7ff639216fc0+79056]
+	(No symbol) [0x0x7ff638fa9c0c]
+	(No symbol) [0x0x7ff6390017fd]
+	(No symbol) [0x0x7ff638ff32a4]
+	(No symbol) [0x0x7ff63902866a]
+	(No symbol) [0x0x7ff638ff2b56]
+	(No symbol) [0x0x7ff639028880]
+	(No symbol) [0x0x7ff639050dbe]
+	(No symbol) [0x0x7ff639028443]
+	(No symbol) [0x0x7ff638ff1311]
+	(No symbol) [0x0x7ff638ff20a3]
+	GetHandleVerifier [0x0x7ff6394ce26d+2926461]
+	GetHandleVerifier [0x0x7ff6394c8993+2903715]
+	GetHandleVerifier [0x0x7ff6394e6aed+3026941]
+	GetHandleVerifier [0x0x7ff6392316fe+187406]
+	GetHandleVerifier [0x0x7ff6392396ef+220159]
+	GetHandleVerifier [0x0x7ff63921faf4+114692]
+	GetHandleVerifier [0x0x7ff63921fca9+115129]
+	GetHandleVerifier [0x0x7ff6392064d8+10728]
+	BaseThreadInitThunk [0x0x7ffa6fe7e8d7+23]
+	RtlUserThreadStart [0x0x7ffa7137c5dc+44]
+</msg>
+<arg>id=logout_sidebar_link</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="FAIL" start="2025-05-29T10:03:33.467948" elapsed="0.445118">ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=137.0.7151.41)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff639216f65+78965]
+	GetHandleVerifier [0x0x7ff639216fc0+79056]
+	(No symbol) [0x0x7ff638fa9c0c]
+	(No symbol) [0x0x7ff6390017fd]
+	(No symbol) [0x0x7ff638ff32a4]
+	(No symbol) [0x0x7ff63902866a]
+	(No symbol) [0x0x7ff638ff2b56]
+	(No symbol) [0x0x7ff639028880]
+	(No symbol) [0x0x7ff639050dbe]
+	(No symbol) [0x0x7ff639028443]
+	(No symbol) [0x0x7ff638ff1311]
+	(No symbol) [0x0x7ff638ff20a3]
+	GetHandleVerifier [0x0x7ff6394ce26d+2926461]
+	GetHandleVerifier [0x0x7ff6394c8993+2903715]
+	GetHandleVerifier [0x0x7ff6394e6aed+3026941]
+	GetHandleVerifier [0x0x7ff6392316fe+187406]
+	GetHandleVerifier [0x0x7ff6392396ef+220159]
+	GetHandleVerifier [0x0x7ff63921faf4+114692]
+	GetHandleVerifier [0x0x7ff63921fca9+115129]
+	GetHandleVerifier [0x0x7ff6392064d8+10728]
+	BaseThreadInitThunk [0x0x7ffa6fe7e8d7+23]
+	RtlUserThreadStart [0x0x7ffa7137c5dc+44]
+</status>
+</kw>
+<kw name="Page Should Contain Element" owner="SeleniumLibrary">
+<arg>id=user-name</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<status status="NOT RUN" start="2025-05-29T10:03:33.913366" elapsed="0.000036"/>
+</kw>
+<status status="FAIL" start="2025-05-29T10:03:33.140611" elapsed="0.773031">ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=137.0.7151.41)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff639216f65+78965]
+	GetHandleVerifier [0x0x7ff639216fc0+79056]
+	(No symbol) [0x0x7ff638fa9c0c]
+	(No symbol) [0x0x7ff6390017fd]
+	(No symbol) [0x0x7ff638ff32a4]
+	(No symbol) [0x0x7ff63902866a]
+	(No symbol) [0x0x7ff638ff2b56]
+	(No symbol) [0x0x7ff639028880]
+	(No symbol) [0x0x7ff639050dbe]
+	(No symbol) [0x0x7ff639028443]
+	(No symbol) [0x0x7ff638ff1311]
+	(No symbol) [0x0x7ff638ff20a3]
+	GetHandleVerifier [0x0x7ff6394ce26d+2926461]
+	GetHandleVerifier [0x0x7ff6394c8993+2903715]
+	GetHandleVerifier [0x0x7ff6394e6aed+3026941]
+	GetHandleVerifier [0x0x7ff6392316fe+187406]
+	GetHandleVerifier [0x0x7ff6392396ef+220159]
+	GetHandleVerifier [0x0x7ff63921faf4+114692]
+	GetHandleVerifier [0x0x7ff63921fca9+115129]
+	GetHandleVerifier [0x0x7ff6392064d8+10728]
+	BaseThreadInitThunk [0x0x7ffa6fe7e8d7+23]
+	RtlUserThreadStart [0x0x7ffa7137c5dc+44]
+</status>
+</test>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-05-29T10:03:33.914417" elapsed="2.131079"/>
+</kw>
+<status status="FAIL" start="2025-05-29T10:03:31.369430" elapsed="4.676212"/>
+</suite>
+<status status="FAIL" start="2025-05-29T10:03:31.342337" elapsed="4.704628"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="0" fail="2" skip="0">Tests</stat>
+<stat name="Test All Login" id="s1-s1" pass="0" fail="1" skip="0">Tests.Test All Login</stat>
+<stat name="Test Logout" id="s1-s2" pass="0" fail="1" skip="0">Tests.Test Logout</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

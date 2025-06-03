@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.3 on win32)" generated="2025-05-29T09:31:17.045022" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="K:\Documents\Programmierung\swaglabs-tests\tests">
+<suite id="s1-s1" name="Test All Login" source="K:\Documents\Programmierung\swaglabs-tests\tests\test_all_login.robot">
+<kw name="Open Browser To Login Page" type="SETUP">
+<msg time="2025-05-29T09:31:17.320491" level="FAIL">No keyword with name 'Open Browser To Login Page' found. Did you try using keyword 'SeleniumLibrary.Open Browser' and forgot to use enough whitespace between keyword and arguments?</msg>
+<status status="FAIL" start="2025-05-29T09:31:17.320426" elapsed="0.000132">No keyword with name 'Open Browser To Login Page' found. Did you try using keyword 'SeleniumLibrary.Open Browser' and forgot to use enough whitespace between keyword and arguments?</status>
+</kw>
+<test id="s1-s1-t1" name="Test Login With All Users" line="10">
+<status status="FAIL" start="2025-05-29T09:31:17.320669" elapsed="0.000357">Parent suite setup failed:
+No keyword with name 'Open Browser To Login Page' found. Did you try using keyword 'SeleniumLibrary.Open Browser' and forgot to use enough whitespace between keyword and arguments?</status>
+</test>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-05-29T09:31:17.321743" elapsed="0.000161"/>
+</kw>
+<status status="FAIL" start="2025-05-29T09:31:17.070325" elapsed="0.251622">Suite setup failed:
+No keyword with name 'Open Browser To Login Page' found. Did you try using keyword 'SeleniumLibrary.Open Browser' and forgot to use enough whitespace between keyword and arguments?</status>
+</suite>
+<suite id="s1-s2" name="Test Logout" source="K:\Documents\Programmierung\swaglabs-tests\tests\test_logout.robot">
+<kw name="Open Browser To Login Page" owner="login_keywords" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:31:17.326319" level="INFO">Opening browser 'firefox' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${LOGIN_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-05-29T09:31:17.325934" elapsed="5.506460"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-05-29T09:31:22.832568" elapsed="0.271651"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:31:17.325592" elapsed="5.778764"/>
+</kw>
+<test id="s1-s2-t1" name="Valid User Can Logout" line="9">
+<kw name="Login With Valid Credentials" owner="login_keywords">
+<kw name="Open Browser To Login Page" owner="login_keywords">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:31:23.105547" level="INFO">Opening browser 'firefox' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${LOGIN_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-05-29T09:31:23.105360" elapsed="5.518809"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-05-29T09:31:28.624398" elapsed="0.280370"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:31:23.105167" elapsed="5.799759"/>
+</kw>
+<kw name="Input Valid Credentials" owner="login_keywords">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:31:28.905669" level="INFO">Typing text 'standard_user' into text field 'id=user-name'.</msg>
+<arg>id=user-name</arg>
+<arg>${USERNAME}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:31:28.905351" elapsed="0.061224"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:31:28.967025" level="INFO">Typing text 'secret_sauce' into text field 'id=password'.</msg>
+<arg>id=password</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:31:28.966760" elapsed="0.016420"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:31:28.905099" elapsed="0.078198"/>
+</kw>
+<kw name="Click Login Button" owner="login_keywords">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:31:28.983850" level="INFO">Clicking button 'id=login-button'.</msg>
+<arg>id=login-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:31:28.983690" elapsed="0.238062"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:31:28.983457" elapsed="0.238426"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:31:23.104923" elapsed="6.117012"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:31:29.222589" level="INFO">Clicking element 'id=react-burger-menu-btn'.</msg>
+<arg>id=react-burger-menu-btn</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:31:29.222274" elapsed="0.223137"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:31:29.445996" level="INFO">Clicking element 'id=logout_sidebar_link'.</msg>
+<arg>id=logout_sidebar_link</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:31:29.445759" elapsed="0.214215"/>
+</kw>
+<kw name="Page Should Contain Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:31:29.662953" level="INFO">Current page contains element 'id=user-name'.</msg>
+<arg>id=user-name</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<status status="PASS" start="2025-05-29T09:31:29.660430" elapsed="0.002604"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:31:23.104445" elapsed="6.558853"/>
+</test>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-05-29T09:31:29.663925" elapsed="5.293619"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:31:17.322514" elapsed="17.635139"/>
+</suite>
+<status status="FAIL" start="2025-05-29T09:31:17.046109" elapsed="17.912648"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="1" fail="1" skip="0">Tests</stat>
+<stat name="Test All Login" id="s1-s1" pass="0" fail="1" skip="0">Tests.Test All Login</stat>
+<stat name="Test Logout" id="s1-s2" pass="1" fail="0" skip="0">Tests.Test Logout</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-05-29T09:31:17.317881" level="ERROR">Error in file 'K:\Documents\Programmierung\swaglabs-tests\tests\test_all_login.robot' on line 3: Resource file '..\..\resources\login_keywords.robot' does not exist.</msg>
+<msg time="2025-05-29T09:31:17.318284" level="ERROR">Error in file 'K:\Documents\Programmierung\swaglabs-tests\tests\test_all_login.robot' on line 4: Resource file '..\..\resources\login_data.robot' does not exist.</msg>
+</errors>
+</robot>

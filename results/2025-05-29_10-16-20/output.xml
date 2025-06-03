@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.3 on win32)" generated="2025-05-29T10:16:21.461102" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="K:\Documents\Programmierung\swaglabs-tests\tests">
+<suite id="s1-s1" name="Test All Login" source="K:\Documents\Programmierung\swaglabs-tests\tests\test_all_login.robot">
+<test id="s1-s1-t1" name="Test Login With All Users" line="8">
+<for flavor="IN">
+<iter>
+<kw name="Get From Dictionary">
+<msg time="2025-05-29T10:16:21.745766" level="FAIL">No keyword with name 'Get From Dictionary' found.</msg>
+<var>${password}</var>
+<arg>${PASSWORDS}</arg>
+<arg>${user}</arg>
+<status status="FAIL" start="2025-05-29T10:16:21.745725" elapsed="0.000088">No keyword with name 'Get From Dictionary' found.</status>
+</kw>
+<kw name="Input Valid Credentials" owner="login_keywords">
+<arg>${user}</arg>
+<arg>${password}</arg>
+<status status="NOT RUN" start="2025-05-29T10:16:21.745965" elapsed="0.000032"/>
+</kw>
+<kw name="Click Login Button" owner="login_keywords">
+<status status="NOT RUN" start="2025-05-29T10:16:21.746089" elapsed="0.000022"/>
+</kw>
+<kw name="Page Should Contain Element" owner="SeleniumLibrary">
+<arg>id=react-burger-menu-btn</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<status status="NOT RUN" start="2025-05-29T10:16:21.746192" elapsed="0.000022"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>id=react-burger-menu-btn</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2025-05-29T10:16:21.746283" elapsed="0.000018"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-05-29T10:16:21.746378" elapsed="0.000018"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=logout_sidebar_link</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="NOT RUN" start="2025-05-29T10:16:21.746455" elapsed="0.000017"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<arg>id=logout_sidebar_link</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2025-05-29T10:16:21.746530" elapsed="0.000016"/>
+</kw>
+<var name="${user}">standard_user</var>
+<status status="FAIL" start="2025-05-29T10:16:21.744152" elapsed="0.002477">No keyword with name 'Get From Dictionary' found.</status>
+</iter>
+<var>${user}</var>
+<value>@{VALID_USERS}</value>
+<status status="FAIL" start="2025-05-29T10:16:21.743936" elapsed="0.002753">No keyword with name 'Get From Dictionary' found.</status>
+</for>
+<status status="FAIL" start="2025-05-29T10:16:21.743604" elapsed="0.003308">No keyword with name 'Get From Dictionary' found.</status>
+</test>
+<status status="FAIL" start="2025-05-29T10:16:21.484913" elapsed="0.262676"/>
+</suite>
+<suite id="s1-s2" name="Test Logout" source="K:\Documents\Programmierung\swaglabs-tests\tests\test_logout.robot">
+<kw name="Open Browser To Login Page" owner="login_keywords" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:16:21.750514" level="INFO">Opening browser 'Chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${LOGIN_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-05-29T10:16:21.750322" elapsed="1.390637"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-05-29T10:16:23.141167" elapsed="0.031959"/>
+</kw>
+<status status="PASS" start="2025-05-29T10:16:21.750159" elapsed="1.423101"/>
+</kw>
+<test id="s1-s2-t1" name="Valid User Can Logout" line="9">
+<kw name="Login With Valid Credentials" owner="login_keywords">
+<kw name="Input Valid Credentials" owner="login_keywords">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:16:23.175267" level="INFO">Typing text 'standard_user' into text field 'id=user-name'.</msg>
+<arg>id=user-name</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T10:16:23.174838" elapsed="0.090460"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:16:23.265771" level="INFO">Typing text 'secret_sauce' into text field 'id=password'.</msg>
+<arg>id=password</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T10:16:23.265513" elapsed="0.069930"/>
+</kw>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="PASS" start="2025-05-29T10:16:23.174492" elapsed="0.161110"/>
+</kw>
+<kw name="Click Login Button" owner="login_keywords">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:16:23.336324" level="INFO">Clicking button 'id=login-button'.</msg>
+<arg>id=login-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T10:16:23.336127" elapsed="0.080087"/>
+</kw>
+<status status="PASS" start="2025-05-29T10:16:23.335794" elapsed="0.080530"/>
+</kw>
+<arg>standard_user</arg>
+<arg>secret_sauce</arg>
+<status status="PASS" start="2025-05-29T10:16:23.174005" elapsed="0.242364"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=react-burger-menu-btn</arg>
+<arg>timeout=5s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-05-29T10:16:23.416633" elapsed="0.016592"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:16:23.433698" level="INFO">Clicking element 'id=react-burger-menu-btn'.</msg>
+<arg>id=react-burger-menu-btn</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T10:16:23.433508" elapsed="0.051787"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=logout_sidebar_link</arg>
+<arg>timeout=5s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-05-29T10:16:23.485606" elapsed="0.224351"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:16:23.710527" level="INFO">Clicking element 'id=logout_sidebar_link'.</msg>
+<arg>id=logout_sidebar_link</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T10:16:23.710303" elapsed="0.039679"/>
+</kw>
+<kw name="Page Should Contain Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T10:16:24.156493" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-05-29T10:16:24.156732" level="FAIL">Page should have contained element 'id=user-name' but did not.</msg>
+<arg>id=user-name</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<status status="FAIL" start="2025-05-29T10:16:23.750278" elapsed="0.431547">Page should have contained element 'id=user-name' but did not.</status>
+</kw>
+<status status="FAIL" start="2025-05-29T10:16:23.173345" elapsed="1.008852">Page should have contained element 'id=user-name' but did not.</status>
+</test>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-05-29T10:16:24.182747" elapsed="2.128833"/>
+</kw>
+<status status="FAIL" start="2025-05-29T10:16:21.748098" elapsed="4.563622"/>
+</suite>
+<status status="FAIL" start="2025-05-29T10:16:21.462210" elapsed="4.850717"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="0" fail="2" skip="0">Tests</stat>
+<stat name="Test All Login" id="s1-s1" pass="0" fail="1" skip="0">Tests.Test All Login</stat>
+<stat name="Test Logout" id="s1-s2" pass="0" fail="1" skip="0">Tests.Test Logout</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.3 on win32)" generated="2025-05-29T09:42:51.137383" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="K:\Documents\Programmierung\swaglabs-tests\tests">
+<suite id="s1-s1" name="Test All Login" source="K:\Documents\Programmierung\swaglabs-tests\tests\test_all_login.robot">
+<kw name="Open Browser To Login Page" owner="login_keywords" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:42:51.405032" level="INFO">Opening browser 'firefox' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${LOGIN_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-05-29T09:42:51.404844" elapsed="5.388082"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-05-29T09:42:56.793149" elapsed="0.261072"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:42:51.404379" elapsed="5.650002"/>
+</kw>
+<test id="s1-s1-t1" name="Test Login With All Users" line="10">
+<for flavor="IN">
+<iter>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-29T09:42:57.055422" level="INFO">Trying to login with standard_user</msg>
+<arg>Trying to login with ${user}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-29T09:42:57.055262" elapsed="0.000213"/>
+</kw>
+<kw name="Input Valid Credentials" owner="login_keywords">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:42:57.056127" level="INFO">Typing text 'standard_user' into text field 'id=user-name'.</msg>
+<arg>id=user-name</arg>
+<arg>${USERNAME}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:42:57.055823" elapsed="0.058293"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:42:57.114576" level="INFO">Typing text 'secret_sauce' into text field 'id=password'.</msg>
+<arg>id=password</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:42:57.114326" elapsed="0.016504"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:42:57.055621" elapsed="0.075351"/>
+</kw>
+<kw name="[Arguments]">
+<msg time="2025-05-29T09:42:57.132459" level="FAIL">No keyword with name '[Arguments]' found.</msg>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<status status="FAIL" start="2025-05-29T09:42:57.132404" elapsed="0.000106">No keyword with name '[Arguments]' found.</status>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<arg>id=user-name</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" start="2025-05-29T09:42:57.132664" elapsed="0.000032"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<arg>id=password</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" start="2025-05-29T09:42:57.132794" elapsed="0.000025"/>
+</kw>
+<kw name="Click Login Button" owner="login_keywords">
+<status status="NOT RUN" start="2025-05-29T09:42:57.132960" elapsed="0.000030"/>
+</kw>
+<kw name="Run Keyword And Ignore Error" owner="BuiltIn">
+<arg>Page Should Contain Element</arg>
+<arg>id=inventory_container</arg>
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<status status="NOT RUN" start="2025-05-29T09:42:57.133096" elapsed="0.000028"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<arg>https://www.saucedemo.com/</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="NOT RUN" start="2025-05-29T09:42:57.133213" elapsed="0.000024"/>
+</kw>
+<var name="${user}">standard_user</var>
+<status status="FAIL" start="2025-05-29T09:42:57.055134" elapsed="0.078166">No keyword with name '[Arguments]' found.</status>
+</iter>
+<var>${user}</var>
+<value>@{LOGIN_USERS}</value>
+<status status="FAIL" start="2025-05-29T09:42:57.054917" elapsed="0.078477">No keyword with name '[Arguments]' found.</status>
+</for>
+<status status="FAIL" start="2025-05-29T09:42:57.054480" elapsed="0.079259">No keyword with name '[Arguments]' found.</status>
+</test>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-05-29T09:42:57.134356" elapsed="2.661256"/>
+</kw>
+<status status="FAIL" start="2025-05-29T09:42:51.161093" elapsed="8.634647"/>
+</suite>
+<suite id="s1-s2" name="Test Logout" source="K:\Documents\Programmierung\swaglabs-tests\tests\test_logout.robot">
+<kw name="Open Browser To Login Page" owner="login_keywords" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:42:59.799374" level="INFO">Opening browser 'firefox' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${LOGIN_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-05-29T09:42:59.799141" elapsed="6.004503"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-05-29T09:43:05.803885" elapsed="0.298734"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:42:59.798899" elapsed="6.303870"/>
+</kw>
+<test id="s1-s2-t1" name="Valid User Can Logout" line="9">
+<kw name="Login With Valid Credentials" owner="login_keywords">
+<kw name="Open Browser To Login Page" owner="login_keywords">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:43:06.104083" level="INFO">Opening browser 'firefox' to base url 'https://www.saucedemo.com/'.</msg>
+<arg>${LOGIN_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-05-29T09:43:06.103892" elapsed="5.430173"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-05-29T09:43:11.534242" elapsed="0.270395"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:43:06.103711" elapsed="5.701033"/>
+</kw>
+<kw name="Input Valid Credentials" owner="login_keywords">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:43:11.805306" level="INFO">Typing text 'standard_user' into text field 'id=user-name'.</msg>
+<arg>id=user-name</arg>
+<arg>${USERNAME}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:43:11.805134" elapsed="0.059532"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:43:11.865027" level="INFO">Typing text 'secret_sauce' into text field 'id=password'.</msg>
+<arg>id=password</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:43:11.864824" elapsed="0.016920"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:43:11.804904" elapsed="0.076940"/>
+</kw>
+<kw name="Click Login Button" owner="login_keywords">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:43:11.882333" level="INFO">Clicking button 'id=login-button'.</msg>
+<arg>id=login-button</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:43:11.882199" elapsed="0.237988"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:43:11.881993" elapsed="0.238332"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:43:06.103470" elapsed="6.016907"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:43:12.120864" level="INFO">Clicking element 'id=react-burger-menu-btn'.</msg>
+<arg>id=react-burger-menu-btn</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:43:12.120639" elapsed="0.213055"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:43:12.334666" level="INFO">Clicking element 'id=logout_sidebar_link'.</msg>
+<arg>id=logout_sidebar_link</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-05-29T09:43:12.334459" elapsed="0.234534"/>
+</kw>
+<kw name="Page Should Contain Element" owner="SeleniumLibrary">
+<msg time="2025-05-29T09:43:12.572286" level="INFO">Current page contains element 'id=user-name'.</msg>
+<arg>id=user-name</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<status status="PASS" start="2025-05-29T09:43:12.569268" elapsed="0.003104"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:43:06.102871" elapsed="6.469755"/>
+</test>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2025-05-29T09:43:12.573179" elapsed="5.287305"/>
+</kw>
+<status status="PASS" start="2025-05-29T09:42:59.796723" elapsed="18.063871"/>
+</suite>
+<status status="FAIL" start="2025-05-29T09:42:51.138517" elapsed="26.723014"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="1" fail="1" skip="0">Tests</stat>
+<stat name="Test All Login" id="s1-s1" pass="0" fail="1" skip="0">Tests.Test All Login</stat>
+<stat name="Test Logout" id="s1-s2" pass="1" fail="0" skip="0">Tests.Test Logout</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
