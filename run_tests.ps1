@@ -8,3 +8,5 @@ $resultsPath = "results\$timestamp"
 New-Item -ItemType Directory -Path $resultsPath
 
 robot --output "$resultsPath/output.xml" --log "$resultsPath/log.html" --report "$resultsPath/report.html" tests/
+Write-Host "Tests wurden ausgeführt in: $resultsPath"
+Start-Process "$resultsPath\log.html"

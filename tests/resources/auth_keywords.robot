@@ -22,3 +22,7 @@ Login With Valid Credentials
     [Arguments]    ${username}    ${password}
     Input Valid Credentials    ${username}    ${password}
     Click Login Button
+
+Logout
+    Click Element    id=react-burger-menu-btn
+    Click Element    id=logout_sidebar_link

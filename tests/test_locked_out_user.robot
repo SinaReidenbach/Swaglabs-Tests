@@ -1,7 +1,6 @@
 *** Settings ***
-Resource    resources/login_keywords.robot
+Resource    resources/auth_keywords.robot
 Resource    resources/login_data.robot
-Library     SeleniumLibrary
 
 Suite Setup       Open Browser To Login Page
 Suite Teardown    Close All Browsers
