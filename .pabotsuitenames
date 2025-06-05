@@ -1,0 +1,6 @@
+datasources:ac690d6efefbe817a06fe954706c210a659f480b
+commandlineoptions:97d170e1550eee4afc0af065b78cda302a97674c
+suitesfrom:no-suites-from-option
+file:47f255705d0fe5ba892343096de86aa3637b37d5
+--suite Tests.Test Logins
+--suite Tests.Test Purchase
