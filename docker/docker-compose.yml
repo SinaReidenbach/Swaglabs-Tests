@@ -1,11 +1,10 @@
-version: '3.8'
-
 services:
   db:
     image: mysql:8
     container_name: swaglabs-db
     restart: always
     environment:
+      TZ: Europe/Berlin
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: swaglabs
       MYSQL_USER: swaguser

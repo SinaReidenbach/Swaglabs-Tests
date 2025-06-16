@@ -1,4 +1,5 @@
 $resultsRoot = "results"
+Set-Location -Path $PSScriptRoot
 
 if (-not (Test-Path -Path $resultsRoot)) {
     New-Item -ItemType Directory -Path $resultsRoot | Out-Null

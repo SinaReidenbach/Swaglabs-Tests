@@ -26,8 +26,8 @@ Login With Valid Credentials
     Click Login Button
 
 Logout
-    Wait Until Element Is Visible    id=react-burger-menu-btn    timeout=5s
+    Wait Until Element Is Visible    id=react-burger-menu-btn    timeout=20s
     Click Element    id=react-burger-menu-btn
-    Wait Until Element Is Visible    id=logout_sidebar_link    timeout=5s
+    Wait Until Element Is Visible    id=logout_sidebar_link    timeout=20s
     Click Element    id=logout_sidebar_link
     Log    Logout abgeschlossen

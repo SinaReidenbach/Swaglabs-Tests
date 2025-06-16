@@ -1,6 +1,7 @@
 *** Settings ***
 Resource            resources/purchase_keywords.robot
 Resource            resources/auth_keywords.robot
+Resource            resources/db_keywords.robot
 Resource            resources/login_data.robot
 Library             Collections
 
@@ -20,9 +21,16 @@ Purchase With All Users
 
         Login With Valid Credentials    ${user}    ${password}
         Add First Item To Cart
+
         Go To Cart
+        Wait Until Element Is Visible    css=.cart_item .inventory_item_name    timeout=10s
+        ${product_name}=    Get Text    css=.cart_item .inventory_item_name
+        ${price_string}=    Get Text    css=.cart_item .inventory_item_price
+        ${price}=    Evaluate    ${price_string}[1:]
         Checkout
+        Finish
         Page Should Contain Element    css=h2.complete-header
+        Save Purchase In Database    ${user}    ${product_name}    ${price}
         Logout
     END
 
@@ -32,7 +40,9 @@ Problem User Receives Error Message
     Click Login Button
     Add First Item To Cart
     Go To Cart
+    Checkout
     Page Should Contain    Last Name is required
+    Finish
     Logout
 
 Error User Cannot Finish

@@ -8,11 +8,14 @@ Add First Item To Cart
 
 Go To Cart
     Click Element    id=shopping_cart_container
+
+Checkout
     Click Button    id=checkout
+
     Input Text    id=first-name    Max
     Input Text    id=last-name    Mustermann
     Input Text    id=postal-code    12345
     Click Button    id=continue
 
-Checkout
+Finish
     Click Button    id=finish
