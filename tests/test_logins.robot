@@ -1,10 +1,8 @@
 *** Settings ***
 Resource            resources/keywords/auth_keywords.robot
-Resource            resources/data/login_data.robot
-Library             Collections
 
 Suite Setup         Open Browser To Login Page
-Suite Teardown      Close All Browsers
+Suite Teardown      Close Browser
 
 *** Test Cases ***
 Test Login And Logout With All Users
