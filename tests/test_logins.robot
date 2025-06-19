@@ -1,6 +1,6 @@
 *** Settings ***
-Resource            resources/auth_keywords.robot
-Resource            resources/login_data.robot
+Resource            resources/keywords/auth_keywords.robot
+Resource            resources/data/login_data.robot
 Library             Collections
 
 Suite Setup         Open Browser To Login Page
