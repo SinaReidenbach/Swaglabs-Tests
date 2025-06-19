@@ -1,4 +1,9 @@
-$resultsRoot = "results"
+param (
+    [bool]$DryRun = $false
+)
+
+$resultsRoot = if ($DryRun) { "resultsDryRun" } else { "results" }
+
 Set-Location -Path $PSScriptRoot
 
 if (-not (Test-Path -Path $resultsRoot)) {
