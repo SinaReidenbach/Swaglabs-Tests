@@ -1,6 +1,5 @@
 __pycache__/
 *.pyc
-*.log
 *.sqlite
 .env
 .vscode/
@@ -9,3 +8,8 @@ __pycache__/
 .history/
 .venv/
 resultsDryRun/
+results/log.html
+results/output.xml
+results/report.html
+results/selenium-screenshot-*
+results/geckodriver-*
