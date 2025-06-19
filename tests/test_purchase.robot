@@ -11,13 +11,12 @@ Suite Teardown      Close Browser
 
 *** Test Cases ***
 Purchase With All Users
-    FOR    ${user}    IN    @{VALID_USERS}
+    FOR    ${user}    ${password}    IN    &{ACCOUNTS}
         IF    '${user}' == 'locked_out_user'    CONTINUE
         IF    '${user}' == 'problem_user'    CONTINUE
         IF    '${user}' == 'error_user'    CONTINUE
         IF    '${user}' == 'visual_user'    CONTINUE
         Log    Aktueller Testnutzer: ${user}
-        ${password}=    Get From Dictionary    ${PASSWORDS}    ${user}
 
         Login With Valid Credentials    ${user}    ${password}
         Add First Item To Cart
