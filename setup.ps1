@@ -22,25 +22,52 @@ else {
 }
 
 # Schritt 4: Docker Desktop starten
+# Prüfen ob Docker läuft
+$dockerRunning = docker version --format '{{.Server.Version}}' 2>$null
+
+if (-not $dockerRunning) {
+    Write-Output "Docker Engine ist nicht aktiv. Versuche zu starten ..."
+    $dockerPath = Join-Path $env:ProgramFiles "Docker\Docker\Docker Desktop.exe"
+
+    if (Test-Path $dockerPath) {
+        Start-Process $dockerPath
+    }
+    else {
+        Write-Output "Docker Desktop nicht gefunden unter: $dockerPath"
+        exit
+    }
+}
+else {
+    Write-Output "Docker läuft (Version: $dockerRunning)"
+}
+
 Write-Host "`n🐳 Docker Desktop starten..."
+Write-Host "⏳ Warte auf Docker" -NoNewline
+
 $maxTries = 30
 $tries = 0
+$dockerRunning = $false
 
 while ($tries -lt $maxTries) {
     $dockerRunning = docker version --format '{{.Server.Version}}' 2>$null
     if ($dockerRunning) {
-        Write-Output "✅ Docker läuft (Version: $dockerRunning)"
         break
     }
-    else {
-        Write-Output "⏳ Warte auf Docker... ($tries)"
-        Start-Sleep -Seconds 2
-        $tries++
-    }
+    Write-Host "." -NoNewline
+    Start-Sleep -Seconds 1
+    $tries++
+}
+
+if ($dockerRunning) {
+    Write-Host "`n✅ Docker läuft (Version: $dockerRunning)"
+}
+else {
+    Write-Host "`n❌ Docker konnte nicht gestartet werden."
 }
 
 if (-not $dockerRunning) {
     Write-Output "❌ Docker konnte nicht innerhalb der erwarteten Zeit gestartet werden."
+    exit
 }
 
 # Schritt 5: Docker Container starten
