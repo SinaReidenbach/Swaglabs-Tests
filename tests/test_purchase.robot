@@ -1,5 +1,6 @@
 *** Settings ***
 Resource            resources/keywords/purchase_keywords.robot
+Resource            resources/keywords/errorhandling_keywords.robot
 
 Suite Setup         Open Browser To Login Page
 Suite Teardown      Close Browser
@@ -21,7 +22,8 @@ Purchase With All Users
             Finish And Save    ${user}    ${product_name}    ${price}
         EXCEPT    AS    ${error}
             #ToDo: Fehler in die DB übertragen
-            Log   ${user} : ${error}
+            Log    ❌ ${user} : ${error}    ERROR
+            Error Message    ${user}    ${error}
             CONTINUE
         FINALLY
             Run Keyword And Ignore Error    Logout

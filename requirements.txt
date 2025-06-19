@@ -1,4 +1,5 @@
 robotframework
+robotframework-robocop
 robotframework-seleniumlibrary
 selenium
 mysql-connector-python

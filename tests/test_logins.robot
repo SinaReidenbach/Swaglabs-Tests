@@ -1,5 +1,6 @@
 *** Settings ***
 Resource            resources/keywords/auth_keywords.robot
+Resource            resources/keywords/errorhandling_keywords.robot
 
 Suite Setup         Open Browser To Login Page
 Suite Teardown      Close Browser
@@ -12,14 +13,16 @@ Test Login And Logout With All Users
             Login With Valid Credentials    ${user}    ${password}
         EXCEPT    AS    ${error}
             #ToDo: Fehler in die DB übertragen
-            Log   ${user} : ${error}
+            Log    ❌ ${user} : ${error}    ERROR
+            Error Message    ${user}    ${error}
             CONTINUE
         END
         TRY
             Logout
         EXCEPT    AS    ${error}
             #ToDo: Fehler in die DB übertragen
-            Log   ${user} : ${error}
+            Log    ❌ ${user} : ${error}    ERROR
+            Error Message    ${user}    ${error}
             CONTINUE
         END
     END
