@@ -4,6 +4,7 @@ Library     Process
 
 *** Keywords ***
 Save Purchase In Database
+    [Documentation]    save actual data to database
     [Arguments]    ${user}    ${product_name}    ${price}
 
     Run Process
