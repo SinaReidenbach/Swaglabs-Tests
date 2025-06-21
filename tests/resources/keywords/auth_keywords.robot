@@ -2,7 +2,7 @@
 Library     Collections
 Library     SeleniumLibrary
 Resource    ../keywords/util_keywords.robot
-Resource    ../data/login_data.robot
+Resource    ../data/login_data.resource
 
 
 *** Keywords ***

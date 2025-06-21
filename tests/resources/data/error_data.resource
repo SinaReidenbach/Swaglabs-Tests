@@ -1,3 +1,4 @@
+# robocop: off=line-too-long
 *** Variables ***
 &{ERROR_MAP_SELENIUM}
 # LOG IN

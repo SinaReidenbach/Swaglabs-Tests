@@ -7,7 +7,7 @@ Suite Teardown      Close Browser
 
 
 *** Test Cases ***
-Purchase With All Users
+Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-test-case
     [Documentation]    Tests purchase per user and logs clear and original errors to the database if any occur.
     ...    user which cannot log in will except
 

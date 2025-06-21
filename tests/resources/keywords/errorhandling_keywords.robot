@@ -3,8 +3,8 @@ Library     Collections
 Library     String
 Library     SeleniumLibrary
 Resource    util_keywords.robot
-Resource    ../data/login_data.robot
-Resource    ../data/error_data.robot
+Resource    ../data/login_data.resource
+Resource    ../data/error_data.resource
 
 
 *** Keywords ***
@@ -16,38 +16,30 @@ Error Message
     ...    Convert To Lowercase
     ...    ${error}
 
-    VAR
-    ...    ${mapped_message}=
-    ...    ${user} :: ${error}
+    ${mapped_message}=    Set Variable     ${user} :: ${error}
 
     FOR    ${key}    ${msg}    IN    &{ERROR_MAP_SELENIUM}
         @{parts}=
         ...    Split String
-        ...    ${key}    |
+        ...    ${key}
+        ...    |
 
-        VAR
-        ...    ${found}=
-        ...    True
+        ${found}=    Set Variable     True
 
         FOR    ${part}    IN    @{parts}
             IF    $part not in "${message_lower}"
-                VAR
-                ...    ${found}=
-                ...    False
+                ${found}=    Set Variable     False
 
                 BREAK
             END
         END
 
         IF    '${found}' == 'True'
-            VAR
-            ...    ${mapped_message}=
-            ...    ${user} : ${msg}
+            ${mapped_message}=    Set Variable    ${user} : ${msg}
 
             BREAK
         END
     END
 
     Log
-    ...    ${mapped_message}
-    ...    \n
+    ...    ${mapped_message}\n
