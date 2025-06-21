@@ -19,11 +19,6 @@ Test Login And Logout With All Users
             ...    ${user}
             ...    ${password}
         EXCEPT    AS    ${error}
-            # ToDo: Fehler in die DB übertragen
-            Log
-            ...    ❌ ${user} : ${error}
-            ...    ERROR
-
             Error Message
             ...    ${user}
             ...    ${error}
@@ -33,11 +28,6 @@ Test Login And Logout With All Users
         TRY
             Logout
         EXCEPT    AS    ${error}
-            # ToDo: Fehler in die DB übertragen
-            Log
-            ...    ❌ ${user} : ${error}
-            ...    ERROR
-
             Error Message
             ...    ${user}
             ...    ${error}

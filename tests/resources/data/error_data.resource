@@ -5,7 +5,7 @@
 ...                         sorry, this user has been locked out=❌ Login fehlgeschlagen: Sorry, dieser Nutzer ist gesperrt
 ...                         username and password do not match any user in this service=❌ Login Fehlgeschlagen: Username und/oder Passwort falsch
 # PURCHASE
-...                         button with locator 'id|finish' not found=❌ Kauf fehlgeschlagen - Finish-Button nicht vorhanden
+...                         button with locator|finish=❌ Kauf fehlgeschlagen - Finish-Button nicht vorhanden
 ...                         page should have contained element|h2.complete-header=❌ Kauf fehlgeschlagen - Finish Button bewirkt nichts
 # LOG OUT
 

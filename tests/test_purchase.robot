@@ -34,11 +34,6 @@ Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-te
             ...    ${product_name}
             ...    ${price}
         EXCEPT    AS    ${error}
-            # ToDo: Fehler in die DB übertragen
-            Log
-            ...    ❌ ${user} : ${error}
-            ...    ERROR
-
             Error Message
             ...    ${user}
             ...    ${error}

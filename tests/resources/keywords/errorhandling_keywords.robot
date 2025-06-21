@@ -12,24 +12,18 @@ Error Message
     [Documentation]    convert selenium-errors to understandable error-messages
     [Arguments]    ${user}    ${error}
 
-    ${message_lower}=
-    ...    Convert To Lowercase
-    ...    ${error}
+    ${message_lower}=    Convert To Lowercase    ${error}
 
     ${mapped_message}=    Set Variable     ${user} :: ${error}
 
     FOR    ${key}    ${msg}    IN    &{ERROR_MAP_SELENIUM}
-        @{parts}=
-        ...    Split String
-        ...    ${key}
-        ...    |
+        @{parts}=    Split String    ${key}    |
 
         ${found}=    Set Variable     True
-
         FOR    ${part}    IN    @{parts}
-            IF    $part not in "${message_lower}"
-                ${found}=    Set Variable     False
+            IF    '${part}' not in "${message_lower}"
 
+                ${found}=    Set Variable     False
                 BREAK
             END
         END
@@ -43,3 +37,8 @@ Error Message
 
     Log
     ...    ${mapped_message}\n
+    ...    ERROR
+    # ToDo: Fehler in die DB übertragen
+    Log
+    ...    ${error} ❌
+    ...    WARN
