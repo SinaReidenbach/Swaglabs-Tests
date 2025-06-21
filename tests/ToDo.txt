@@ -1,0 +1,24 @@
+Must Have                |  ready?   |   Nice To Have                    |   ready?
+_________________________|___________|___________________________________|______________
+Installationen           |  ✅       |   # results einzeltests->Ordner   |  ❌
+Geckodriver              |  ✅       |   # Abfangen von JS Fehlern       |  ❌
+Docker                   |  ✅       |   # robocop Problem               |  ❌
+SQL-Datenbank            |  ✅       |
+Datadriven Ansatz        |  ✅       |
+SeleniumLibrary          |  ✅       |
+Git Repository           |  ✅       |
+Login Tests              |  ✅       |
+Kauf Tests               |  ✅       |
+Infos speichern          |  ✅       |
+Fehler speichern         |  ❌       |
+Datadriven Ansatz        |  ✅       |
+Bericht/LOG->Git         |  ✅       |
+Sourcefiles->Git         |  ✅       |
+Dokumentation->Git       |  ❌       |
+Präsentation             |  ❌       |
+Readme anpassen          |  ❌       |
+setup prüfen             |  ❌       |
+Dennis clone test        |  ❌       |
+manuell testen           |  ❌       |
+Fehlerübersetzung ausg.  |  ❌       |
+Fehler nach Deutsch      |  ❌       |

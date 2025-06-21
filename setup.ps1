@@ -78,12 +78,16 @@ docker-compose -f ./docker/docker-compose.yml up -d
 Write-Host "`n⏳ Warte auf Datenbankverfügbarkeit..."
 Start-Sleep -Seconds 10
 
-# Schritt 7: Ausgabe der Zugänge
+# Schritt 7: Erstelle Tabelle
+Write-Host "`n🛢️  Tabelle erstellen"
+python '.\db\create_purchase.py'
+
+# Schritt 8: Ausgabe der Zugänge
 Write-Host "`n✅ Setup abgeschlossen!"
 Write-Host "Datenbank läuft auf:     localhost:3306"
 Write-Host "phpMyAdmin erreichbar:   http://localhost:8080"
 Write-Host "Benutzername:            swaguser"
 Write-Host "Passwort:                swagpass"
 
-# Schritt 8: Hinweis auf Teststart
+# Schritt 9: Hinweis auf Teststart
 Write-Host "`n📄 Starte Tests mit: .\run_tests.ps1" -ForegroundColor Green

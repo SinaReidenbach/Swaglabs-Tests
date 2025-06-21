@@ -12,7 +12,11 @@ Set-Alias rebase-from-master Rebase-FromMaster
 # git config --global alias.hard-clean-reset '!git fetch origin && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD) && git clean -xfd'
 # git hard-clean-reset
 function Hard-CleanReset {
-    $branch = git rev-parse --abbrev-ref HEAD
+    $branch = git symbolic-ref --short HEAD 2>$null
+    if (-not $branch) {
+        Write-Error "❌ Du befindest dich auf keinem Branch (HEAD ist detached)."
+        exit 1
+    }
     git fetch origin
     git reset --hard "origin/$branch"
     git clean -xfd
