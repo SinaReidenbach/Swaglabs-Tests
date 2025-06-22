@@ -12,26 +12,27 @@ Test Login And Logout With All Users
 #    [Tags]    robot:skip
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
         TRY
-            Log
-            ...    Aktueller Testnutzer: ${user}
+            ${geckopath}=    Get latest Geckodriver Log
+            ${before}=    Read latest Geckodriver Log    ${geckopath}
 
             Login With Valid Credentials
             ...    ${user}
             ...    ${password}
-        EXCEPT    AS    ${error}
-            Error Message
-            ...    ${user}
-            ...    ${error}
 
-            CONTINUE
+            Error Message JavaScript    ${user}    ${before}
+        EXCEPT    AS    ${error}
+                Error Message    ${user}    ${error}
+                Error Message JavaScript    ${user}    ${before}
         END
         TRY
-            Logout
-        EXCEPT    AS    ${error}
-            Error Message
-            ...    ${user}
-            ...    ${error}
+            ${geckopath}=    Get latest Geckodriver Log
+            ${before}=    Read latest Geckodriver Log    ${geckopath}
 
-            CONTINUE
+            Logout
+
+            Error Message JavaScript    ${user}    ${before}
+        EXCEPT    AS    ${error}
+                Error Message JavaScript    ${user}    ${before}
+                Run Keyword And Ignore Error    Logout
         END
     END

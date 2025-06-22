@@ -20,19 +20,42 @@ Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-te
             CONTINUE
         END
 
-        Log    Aktueller Testnutzer: ${user}
         TRY
-            Add Item And Go To Cart
+            TRY
+                ${geckopath}=    Get latest Geckodriver Log
+                ${before}=    Read latest Geckodriver Log    ${geckopath}
+                Add Item And Go To Cart
+                Error Message JavaScript    ${user}    ${before}
+            EXCEPT    AS    ${error}
+                Error Message    ${user}    ${error}
+                Error Message JavaScript    ${user}    ${before}
+            END
 
             ${product_name}    ${price}=
             ...    Get Product Info
+            TRY
+                ${geckopath}=    Get latest Geckodriver Log
+                ${before}=    Read latest Geckodriver Log    ${geckopath}
+                Checkout
+                Error Message JavaScript    ${user}    ${before}
+            EXCEPT    AS    ${error}
+                Error Message    ${user}    ${error}
+                Error Message JavaScript    ${user}    ${before}
+            END
+            TRY
+                ${geckopath}=    Get latest Geckodriver Log
+                ${before}=    Read latest Geckodriver Log    ${geckopath}
 
-            Checkout
+                Finish And Save
+                ...    ${user}
+                ...    ${product_name}
+                ...    ${price}
 
-            Finish And Save
-            ...    ${user}
-            ...    ${product_name}
-            ...    ${price}
+                Error Message JavaScript    ${user}    ${before}
+            EXCEPT    AS    ${error}
+                Error Message    ${user}    ${error}
+                Error Message JavaScript    ${user}    ${before}
+            END
         EXCEPT    AS    ${error}
             Error Message
             ...    ${user}

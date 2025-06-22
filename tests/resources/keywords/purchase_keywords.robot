@@ -60,11 +60,3 @@ Finish And Save
     ...    ${user}
     ...    ${product_name}
     ...    ${price}
-
-
-Finish
-    [Documentation]    Clicks the finish button, verifies successful checkout
-
-    Click Button    id=finish
-
-    Page Should Contain Element    css=h2.complete-header

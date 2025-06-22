@@ -69,11 +69,9 @@ Read Latest Geckodriver Log
     ${geckofile}=    Get File    ${geckopath}
     RETURN    ${geckofile}
 
-Extract The Current JavaScript Error
-    [Arguments]    ${after}    ${before}
-    ${log}=    Replace String    ${after}    ${before}    ${EMPTY}
-    Should Contain    ${log}    cesetRart
-    ${parts}=   Split String    ${log}    TypeError:
-    ${error}=   Get From List   ${parts}    1
-    ${error}=    Strip String     ${error}
-    RETURN    ${error}
+
+Debugging
+    [Arguments]    ${after_lines}    ${before_lines}    ${new_lines}
+    Log To Console    \n\n\n********************************************************************
+
+    Log To Console    ********************************************************************\n\n\n
