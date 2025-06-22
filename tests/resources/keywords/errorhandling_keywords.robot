@@ -36,7 +36,7 @@ Error Message
     END
 
     Log
-    ...    ${mapped_message}\n
+    ...    ${mapped_message}
     ...    ERROR
     # ToDo: Fehler in die DB übertragen
     Log

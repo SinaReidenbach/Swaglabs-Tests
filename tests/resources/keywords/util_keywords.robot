@@ -1,5 +1,8 @@
 *** Settings ***
 Library     SeleniumLibrary
+Library     OperatingSystem
+Library     String
+Library     Collections
 
 
 *** Variables ***
@@ -48,3 +51,17 @@ Get Product Info
     RETURN
     ...    ${product_name}
     ...    ${price}
+
+Get Most Recent Geckodriver Log
+    ${path}=   Join Path    ${OUTPUT DIR}    geckodriver-*.log
+    ${cmd}=    Catenate    dir /b /od    "${path}"
+
+
+    ${files}=  Run    ${cmd}
+
+    ${list}=    Split String    ${files}    \n
+    ${last}=    Get From List    ${list}    -1
+
+    ${path}=   Join Path    ${OUTPUT DIR}    ${last}
+
+    RETURN    ${path}
