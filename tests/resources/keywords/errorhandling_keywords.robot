@@ -8,7 +8,7 @@ Resource    ../data/error_data.resource
 
 
 *** Keywords ***
-Error Message
+Error Message Selenium
     [Documentation]    convert selenium-errors to understandable error-messages
     [Arguments]    ${user}    ${error}
 
@@ -50,7 +50,7 @@ Error Message JavaScript
     ${after}=    Read latest Geckodriver Log    ${geckopath}
     @{unique_errors}=    Extract The Current JavaScript Error    ${after}    ${before}
     FOR    ${error}    IN    @{unique_errors}
-        Error Message
+        Error Message Selenium
         ...    ${user}
         ...    ${error}
     END
@@ -70,7 +70,6 @@ Extract The Current JavaScript Error
     FOR    ${line}    IN    @{new_lines}
         Run Keyword If    'JavaScript error' in '${line}'    Run Keyword    Extract And Append Error    ${line}    ${unique_errors}
     END
-    Log To Console    UNIQUE ERRORS: ${unique_errors}
 
     RETURN    ${unique_errors}
 
@@ -88,3 +87,20 @@ Extract And Append Error
     ${error}=    Get From List    ${lines}    1
     ${error}=    Strip String    ${error}
     Run Keyword If    "${error}" not in ${error_list}    Append To List    ${error_list}    ${error}
+
+Read Geckodriver Log
+    ${geckopath}=    Get latest Geckodriver Log
+    ${before}=    Read latest Geckodriver Log    ${geckopath}
+    RETURN    ${before}
+
+Run Error Check
+    [Arguments]    ${user}    ${step_keyword}    @{args}
+    ${before}=    Read Geckodriver Log
+    TRY
+        Run Keyword    ${step_keyword}    @{args}
+        Error Message JavaScript    ${user}    ${before}
+    EXCEPT    AS    ${error}
+        Error Message Selenium    ${user}    ${error}
+        Error Message JavaScript    ${user}    ${before}
+        Fail    Schritt ${step_keyword} mit Fehler fehlgeschlagen: ${error}
+    END
