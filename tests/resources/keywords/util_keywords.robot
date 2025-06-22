@@ -67,6 +67,7 @@ Get latest Geckodriver Log
 Read Latest Geckodriver Log
     [Arguments]    ${geckopath}
     ${geckofile}=    Get File    ${geckopath}
+    RETURN    ${geckofile}
 
 Extract The Current JavaScript Error
     [Arguments]    ${after}    ${before}
