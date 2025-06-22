@@ -16,11 +16,12 @@ Error Message
 
     ${mapped_message}=    Set Variable     ${user} :: ${error}
 
-    FOR    ${key}    ${msg}    IN    &{ERROR_MAP_SELENIUM}
+    FOR    ${key}    ${msg}    IN    &{ERROR_MAP}
         @{parts}=    Split String    ${key}    |
 
         ${found}=    Set Variable     True
         FOR    ${part}    IN    @{parts}
+
             IF    '${part}' not in "${message_lower}"
 
                 ${found}=    Set Variable     False
@@ -29,9 +30,10 @@ Error Message
         END
 
         IF    '${found}' == 'True'
-            ${mapped_message}=    Set Variable    ${user} : ${msg}
 
+            ${mapped_message}=    Set Variable    ${user} : ${msg}
             BREAK
+
         END
     END
 

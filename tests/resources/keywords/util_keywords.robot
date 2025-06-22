@@ -52,11 +52,9 @@ Get Product Info
     ...    ${product_name}
     ...    ${price}
 
-Get Most Recent Geckodriver Log
+Get latest Geckodriver Log
     ${path}=   Join Path    ${OUTPUT DIR}    geckodriver-*.log
     ${cmd}=    Catenate    dir /b /od    "${path}"
-
-
     ${files}=  Run    ${cmd}
 
     ${list}=    Split String    ${files}    \n
@@ -65,3 +63,16 @@ Get Most Recent Geckodriver Log
     ${path}=   Join Path    ${OUTPUT DIR}    ${last}
 
     RETURN    ${path}
+
+Read Latest Geckodriver Log
+    [Arguments]    ${geckopath}
+    ${geckofile}=    Get File    ${geckopath}
+
+Extract The Current JavaScript Error
+    [Arguments]    ${after}    ${before}
+    ${log}=    Replace String    ${after}    ${before}    ${EMPTY}
+    Should Contain    ${log}    cesetRart
+    ${parts}=   Split String    ${log}    TypeError:
+    ${error}=   Get From List   ${parts}    1
+    ${error}=    Strip String     ${error}
+    RETURN    ${error}

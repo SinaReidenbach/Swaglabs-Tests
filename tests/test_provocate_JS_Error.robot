@@ -20,20 +20,21 @@ Provoziere JS-Fehler
 
         Checkout
 
-        ${geckofile}=    Get Most Recent Geckodriver Log
-        ${before}=    Get File    ${geckofile}
+        ${geckopath}=    Get latest Geckodriver Log
+        ${before}=    Read latest Geckodriver Log    ${geckopath}
 
         Finish
     EXCEPT
         Sleep    1s
-        ${after}=    Get File    ${geckofile}
-        ${log}=    Replace String    ${after}    ${before}    ${EMPTY}
-        Should Contain    ${log}    cesetRart
-        ${parts}=   Split String    ${log}    TypeError:
-        ${error}=   Get From List   ${parts}    1
-        ${error}=    Strip String     ${error}
+        ${after}=    Read latest Geckodriver Log    ${geckopath}
+        ${error}=    Extract The Current JavaScript Error    ${after}    ${before}
+
         Log    ${error}
         Log To Console    \n${error}
+
+        Error Message
+            ...    error_user
+            ...    ${error}
     END
     Sleep    2s
     [Teardown]    Close Browser
