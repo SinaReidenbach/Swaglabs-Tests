@@ -13,6 +13,8 @@ Test Login And Logout With All Users
 #    [Tags]    robot:skip
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
+        Log To Console    \n\n TEST: Login Test mit ${user}
+        Log To Console    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         TRY
             Run Error Check    ${user}    Login With Valid Credentials    ${user}    ${password}
         EXCEPT    AS    ${error}

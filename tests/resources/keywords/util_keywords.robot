@@ -41,6 +41,8 @@ Wait Until All Elements Visible
 Get Product Info
     [Documentation]    getting actual produkt infos and remove "$"
 
+    Log To Console    \n Produktinfos ermitteln
+
     ${product_name}=
     ...    Get Text
     ...    css=.cart_item .inventory_item_name
@@ -52,6 +54,8 @@ Get Product Info
     ${price}=
     ...    Evaluate
     ...    ${price_string}[1:]
+    ...
+    Log To Console    ermittelte Produktinfos: produkt_name: ${product_name} | price: ${price}
 
     ${entries}=    Collect Database Entries    ${EMPTY}    ${NONE}    ${product_name}    ${price}    ${NONE}    ${NONE}
 
@@ -74,6 +78,8 @@ Read Latest Geckodriver Log
     RETURN    ${geckofile}
 
 Initialize Original
+    Log To Console    \n ORIGINAL wird initialisiert
+
     Set Suite Variable    @{ORIGINAL}    ${None}    ${None}    ${None}    ${None}    ${None}
 
 Debugging

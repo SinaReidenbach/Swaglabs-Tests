@@ -8,7 +8,7 @@ Resource    db_keywords.robot
 Save Purchase In Database
     [Documentation]    Save complete entry (with or without errors) to database
     [Arguments]    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
-    Log To Console    \n\n letzter Schritt Speichern in die DB
+    Log To Console    \n letzter Schritt Speichern in die DB (lade insert_purchase.py)
     Run Process
     ...    python
     ...    ../../../db/insert_purchase.py
@@ -22,7 +22,7 @@ Save Purchase In Database
 
 Save Entries To Database
     [Arguments]
-    Log To Console    \n\n Schritt befehl zum speichern ggf überflüssig
+    Log To Console    \n Schritt befehl zum speichern
 
     ${entries}=                Set Variable    @{ORIGINAL}
     ${user}=                   Get From List    ${entries}    0
@@ -32,13 +32,13 @@ Save Entries To Database
     ${error_describtion}=      Get From List    ${entries}    4
 
     Log To Console
-    ...    \n\n 💾 Datenbankeintrag: ${user} | ${product_name} | ${price} | ${error} | ${error_describtion}
+    ...    \n 💾 Datenbankeintrag: ${user} | ${product_name} | ${price} | ${error} | ${error_describtion}
 
     Save Purchase In Database    ${user}    ${product_name}    ${price}    ${error}    ${error_describtion}
 
 Collect Database Entries
     [Arguments]    ${original}    ${user}=${NONE}    ${product_name}=${NONE}    ${price}=${NONE}    ${error}=${NONE}    ${error_describtion}=${NONE}
-    Log To Console    \n\n Schritt zusammenstellen der DB Einträge
+    Log To Console    \n Schritt zusammenstellen der DB Einträge
     ${is_empty}=    Run Keyword And Return Status    Length Should Be    ${original}    0
 
     IF    ${is_empty}
@@ -58,7 +58,7 @@ Collect Database Entries
         ...  ELSE
         ...    Append To List    ${entries}    ${old}
     END
-
+    Log To Console    \n zusammengestellte Daten: ${entries}
+    Log To Console    \n ORIGINAL wird aktualisiert
     Set Suite Variable    @{ORIGINAL}    @{entries}
-
     RETURN    ${entries}

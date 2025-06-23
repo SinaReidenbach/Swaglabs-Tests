@@ -11,7 +11,7 @@ Resource    ../data/error_data.resource
 Error Message Selenium
     [Documentation]    convert selenium-errors to understandable error-messages
     [Arguments]    ${user}    ${error}
-
+    Log To Console    \n Schritt Fehler aus error_map lesen und errormessage formulieren
     ${message_lower}=    Convert To Lowercase    ${error}
     ${mapped_message}=    Set Variable     ${user} :: ${error}
 
@@ -36,15 +36,19 @@ Error Message Selenium
     ...    ERROR
 
     ${EMPTY}=    Create List
-    Log To Console    \n\n Schritt weitergabe der Fehler an Sammlung der Entries
+    Log To Console    \n Schritt weitergabe der Fehler an Sammlung der Entries
     ${entries}=    Collect Database Entries    ${EMPTY}    ${user}    ${NONE}    ${NONE}    ${error}    ${mapped_message}
 
 Error Message JavaScript
     [Arguments]    ${user}    ${before}
+    Log To Console    \n Schritt neue JavaScript Fehler aus Geckofile ermitteln
     Sleep    2s
     ${geckopath}=    Get latest Geckodriver Log
     ${after}=    Read latest Geckodriver Log    ${geckopath}
     @{unique_errors}=    Extract The Current JavaScript Error    ${after}    ${before}
+
+    Log To Console    \n ermittelte JavaScript Fehler: ${unique_errors}
+
     FOR    ${error}    IN    @{unique_errors}
         Error Message Selenium
         ...    ${user}
@@ -53,6 +57,8 @@ Error Message JavaScript
 
 Extract The Current JavaScript Error
     [Arguments]    ${after}    ${before}
+
+    Log To Console    \n JavaScript Fehler aus Geckofile extrahieren
     ${after_lines}=    Split To Lines    ${after}
     ${before_lines}=   Split To Lines    ${before}
 

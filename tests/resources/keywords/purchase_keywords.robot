@@ -48,30 +48,6 @@ Checkout
 
     Insert Personal Data
 
-Finish And Save
-    [Documentation]    Clicks the finish button, verifies successful checkout, and Save Purchase In Database.
-    [Arguments]    ${user}    ${product_name}    ${price}
-
-    Click Button    id=finish
-
-    Page Should Contain Element    css=h2.complete-header
-
-    ${entries}=    Set Variable    @{ORIGINAL}
-    ${user}=          Get From List    ${entries}    0
-    Log To Console    save: user: ${user}
-    ${product_name}=      Get From List    ${entries}    1
-    Log To Console    save: product_name: ${product_name}
-    ${price}=          Get From List    ${entries}    2
-    Log To Console    save: price: ${price}
-    ${error}=          Get From List    ${entries}    3
-    Log To Console    save: error: ${error}
-    ${error_describtion}=      Get From List    ${entries}    4
-    Log To Console    save: error_describtion: ${error_describtion}
-
-    Log To Console    💾 Datenbankeintrag: ${user} | ${product_name} | ${price} | ${error} | ${error_describtion}
-
-    Save Purchase In Database    ${user}    ${product_name}    ${price}    ${error}    ${error_describtion}
-
 
 Finish Purchase
     [Arguments]    ${user}    ${product_name}    ${price}
