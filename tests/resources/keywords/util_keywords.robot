@@ -57,7 +57,7 @@ Get Product Info
     ...
     Log To Console    ermittelte Produktinfos: produkt_name: ${product_name} | price: ${price}
 
-    ${entries}=    Collect Database Entries    ${EMPTY}    ${NONE}    ${product_name}    ${price}    ${NONE}    ${NONE}
+    ${entries}=    Collect Database Entries    ${None}    ${product_name}    ${price}    ${None}    ${None}
 
 
 Get latest Geckodriver Log

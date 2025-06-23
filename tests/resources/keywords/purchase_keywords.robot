@@ -57,4 +57,4 @@ Finish Purchase
     Page Should Contain Element    css=h2.complete-header
 
     Log To Console      \n\n Schritt Übergabe der Produktinfos an Sammlung Entries
-    ${entries}=    Collect Database Entries    ${EMPTY}    ${user}    ${product_name}    ${price}    ${NONE}    ${NONE}
+    ${entries}=    Collect Database Entries    ${user}    ${product_name}    ${price}    ${None}    ${None}

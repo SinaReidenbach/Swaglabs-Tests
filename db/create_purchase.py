@@ -12,13 +12,13 @@ def create_purchase():
     cursor = connection.cursor()
     sql = (
         "CREATE TABLE IF NOT EXISTS purchases ("
-            "id            INT           AUTO_INCREMENT PRIMARY KEY, "
-            "username      VARCHAR(50)   NOT NULL, "
-            "product_name  VARCHAR(100)  NOT NULL, "
-            "price         DECIMAL(10,2) NOT NULL, "
-            "error  VARCHAR(100)  NOT NULL, "
-            "error_description  VARCHAR(100)  NOT NULL, "
-            "purchase_date TIMESTAMP     DEFAULT CURRENT_TIMESTAMP"
+            "id                 INT             AUTO_INCREMENT PRIMARY KEY, "
+            "username           VARCHAR(50)     NULL, "
+            "product_name       VARCHAR(100)    NULL, "
+            "price              DECIMAL(10,2)   NULL, "
+            "error              LONGTEXT        NULL, "
+            "error_description  LONGTEXT        NULL, "
+            "purchase_date      TIMESTAMP       DEFAULT CURRENT_TIMESTAMP"
         ");"
     )
     cursor.execute(sql)

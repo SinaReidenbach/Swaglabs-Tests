@@ -9,7 +9,8 @@ Save Purchase In Database
     [Documentation]    Save complete entry (with or without errors) to database
     [Arguments]    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
     Log To Console    \n letzter Schritt Speichern in die DB (lade insert_purchase.py)
-    Run Process
+    Log To Console    \n Daten zu speichern: user: ${user} | product_name: ${product_name} | price: ${price} | error: ${error} | error_description: ${error_description}
+    ${run}=    Run Process
     ...    python
     ...    ../../../db/insert_purchase.py
     ...    ${user}
@@ -19,7 +20,8 @@ Save Purchase In Database
     ...    ${error_description}
     ...    shell=True
     ...    cwd=${CURDIR}
-
+    Log To Console    stdout ${run.stdout}
+    Log To Console    stderr ${run.stderr}
 Save Entries To Database
     [Arguments]
     Log To Console    \n Schritt befehl zum speichern
@@ -29,24 +31,22 @@ Save Entries To Database
     ${product_name}=           Get From List    ${entries}    1
     ${price}=                  Get From List    ${entries}    2
     ${error}=                  Get From List    ${entries}    3
-    ${error_describtion}=      Get From List    ${entries}    4
+    ${error_description}=      Get From List    ${entries}    4
 
     Log To Console
-    ...    \n 💾 Datenbankeintrag: ${user} | ${product_name} | ${price} | ${error} | ${error_describtion}
+    ...    \n 💾 Datenbankeintrag: ${user} | ${product_name} | ${price} | ${error} | ${error_description}
 
-    Save Purchase In Database    ${user}    ${product_name}    ${price}    ${error}    ${error_describtion}
+    Save Purchase In Database    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
 
+#    ${entries}=    Set Variable    ${None}
+#    Set Suite Variable    @{ORIGINAL}    @{ORIGINAL}
 Collect Database Entries
-    [Arguments]    ${original}    ${user}=${NONE}    ${product_name}=${NONE}    ${price}=${NONE}    ${error}=${NONE}    ${error_describtion}=${NONE}
+    [Arguments]    ${user}=${None}    ${product_name}=${None}    ${price}=${None}    ${error}=${None}    ${error_description}=${None}
     Log To Console    \n Schritt zusammenstellen der DB Einträge
-    ${is_empty}=    Run Keyword And Return Status    Length Should Be    ${original}    0
 
-    IF    ${is_empty}
-        ${original}=    Create List    ${NONE}    ${NONE}    ${NONE}    ${NONE}    ${NONE}
-    END
+    ${original}=    Create List    ${None}    ${None}    ${None}    ${None}    ${None}
 
-
-    @{new_args}=    Create List    ${user}    ${product_name}    ${price}    ${error}    ${error_describtion}
+    @{new_args}=    Create List    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
 
     @{entries}=    Create List
 

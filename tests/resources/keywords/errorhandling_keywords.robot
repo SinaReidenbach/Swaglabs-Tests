@@ -35,9 +35,8 @@ Error Message Selenium
     ...    ❌ ${mapped_message} | ${error}
     ...    ERROR
 
-    ${EMPTY}=    Create List
     Log To Console    \n Schritt weitergabe der Fehler an Sammlung der Entries
-    ${entries}=    Collect Database Entries    ${EMPTY}    ${user}    ${NONE}    ${NONE}    ${error}    ${mapped_message}
+    ${entries}=    Collect Database Entries    ${user}    ${None}    ${None}    ${error}    ${mapped_message}
 
 Error Message JavaScript
     [Arguments]    ${user}    ${before}

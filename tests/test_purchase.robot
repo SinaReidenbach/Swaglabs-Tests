@@ -11,7 +11,7 @@ Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-te
     [Documentation]    Tests purchase per user and logs clear and original errors to the database if any occur.
     ...    user which cannot log in will except
 #    [Tags]    robot:skip
-    FOR    ${user}    ${password}    IN    &{ACCOUNTS}^
+    FOR    ${user}    ${password}    IN    &{ACCOUNTS}
         Log To Console    \n\n TEST: Purchase Test mit ${user}
         Log To Console    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         TRY
