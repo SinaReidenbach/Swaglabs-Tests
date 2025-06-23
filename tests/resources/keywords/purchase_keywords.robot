@@ -56,7 +56,29 @@ Finish And Save
 
     Page Should Contain Element    css=h2.complete-header
 
-    Save Purchase In Database
-    ...    ${user}
-    ...    ${product_name}
-    ...    ${price}
+    ${entries}=    Set Variable    @{ORIGINAL}
+    ${user}=          Get From List    ${entries}    0
+    Log To Console    save: user: ${user}
+    ${product_name}=      Get From List    ${entries}    1
+    Log To Console    save: product_name: ${product_name}
+    ${price}=          Get From List    ${entries}    2
+    Log To Console    save: price: ${price}
+    ${error}=          Get From List    ${entries}    3
+    Log To Console    save: error: ${error}
+    ${error_describtion}=      Get From List    ${entries}    4
+    Log To Console    save: error_describtion: ${error_describtion}
+
+    Log To Console    💾 Datenbankeintrag: ${user} | ${product_name} | ${price} | ${error} | ${error_describtion}
+
+    Save Purchase In Database    ${user}    ${product_name}    ${price}    ${error}    ${error_describtion}
+
+
+Finish Purchase
+    [Arguments]    ${user}    ${product_name}    ${price}
+    Log To Console    \n\n Schritt Kauf abschliessen
+    Click Button    id=finish
+
+    Page Should Contain Element    css=h2.complete-header
+
+    Log To Console      \n\n Schritt Übergabe der Produktinfos an Sammlung Entries
+    ${entries}=    Collect Database Entries    ${EMPTY}    ${user}    ${product_name}    ${price}    ${NONE}    ${NONE}

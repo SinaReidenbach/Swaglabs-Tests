@@ -1,10 +1,10 @@
 *** Settings ***
 Resource            resources/keywords/purchase_keywords.robot
 Resource            resources/keywords/errorhandling_keywords.robot
+Resource            resources/variables/variables.robot
 
-Suite Setup         Open Browser To Login Page
+Suite Setup         Initialize Original And Open Browser To Login Page
 Suite Teardown      Close Browser
-
 
 *** Test Cases ***
 Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-test-case
@@ -23,11 +23,12 @@ Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-te
             Run Error Check    ${user}    Add Item And Go To Cart
             ${product_name}    ${price}=    Get Product Info
             Run Error Check    ${user}    Checkout
-            Run Error Check    ${user}    Finish And Save    ${user}    ${product_name}    ${price}
+            Run Error Check    ${user}    Finish Purchase    ${user}    ${product_name}    ${price}
         EXCEPT    AS    ${error}
             Error Message Selenium    ${user}    ${error}
             CONTINUE
         FINALLY
             Run Keyword And Ignore Error    Logout
+            Save Entries To Database
         END
     END

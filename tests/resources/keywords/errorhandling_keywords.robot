@@ -13,35 +13,31 @@ Error Message Selenium
     [Arguments]    ${user}    ${error}
 
     ${message_lower}=    Convert To Lowercase    ${error}
-
     ${mapped_message}=    Set Variable     ${user} :: ${error}
 
     FOR    ${key}    ${msg}    IN    &{ERROR_MAP}
         @{parts}=    Split String    ${key}    |
-
         ${found}=    Set Variable     True
         FOR    ${part}    IN    @{parts}
-
-            IF    '${part}' not in "${message_lower}"
-
+            IF    $part not in $message_lower
                 ${found}=    Set Variable     False
                 BREAK
             END
         END
 
         IF    '${found}' == 'True'
-
             ${mapped_message}=    Set Variable    ${user} : ${msg}
             BREAK
-
         END
     END
 
     Log
     ...    ❌ ${mapped_message} | ${error}
     ...    ERROR
-    # ToDo: Fehler in die DB übertragen
 
+    ${EMPTY}=    Create List
+    Log To Console    \n\n Schritt weitergabe der Fehler an Sammlung der Entries
+    ${entries}=    Collect Database Entries    ${EMPTY}    ${user}    ${NONE}    ${NONE}    ${error}    ${mapped_message}
 
 Error Message JavaScript
     [Arguments]    ${user}    ${before}

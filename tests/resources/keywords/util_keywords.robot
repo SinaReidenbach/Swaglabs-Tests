@@ -4,6 +4,7 @@ Library     OperatingSystem
 Library     String
 Library     Collections
 
+Resource    db_keywords.robot
 
 *** Variables ***
 ${BROWSER}      headlessfirefox
@@ -11,6 +12,10 @@ ${LOGIN_URL}    https://www.saucedemo.com/
 
 
 *** Keywords ***
+Initialize Original And Open Browser To Login Page
+    Initialize Original
+    Open Browser To Login Page
+
 Open Browser To Login Page
     [Documentation]    open browser, maximize the window and wait for contain of element "user-name"
 
@@ -48,9 +53,8 @@ Get Product Info
     ...    Evaluate
     ...    ${price_string}[1:]
 
-    RETURN
-    ...    ${product_name}
-    ...    ${price}
+    ${entries}=    Collect Database Entries    ${EMPTY}    ${NONE}    ${product_name}    ${price}    ${NONE}    ${NONE}
+
 
 Get latest Geckodriver Log
     ${path}=   Join Path    ${OUTPUT DIR}    geckodriver-*.log
@@ -69,6 +73,8 @@ Read Latest Geckodriver Log
     ${geckofile}=    Get File    ${geckopath}
     RETURN    ${geckofile}
 
+Initialize Original
+    Set Suite Variable    @{ORIGINAL}    ${None}    ${None}    ${None}    ${None}    ${None}
 
 Debugging
     [Arguments]    ${after_lines}    ${before_lines}    ${new_lines}

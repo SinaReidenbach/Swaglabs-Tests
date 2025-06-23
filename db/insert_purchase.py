@@ -17,4 +17,4 @@ def insert_purchase(username, product_name, price, error, error_describtion):
     connection.close()
 
 if __name__ == "__main__":
-    insert_purchase(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+    insert_purchase(*sys.argv[1:6])
