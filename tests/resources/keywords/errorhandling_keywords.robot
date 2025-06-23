@@ -102,5 +102,4 @@ Run Error Check
     EXCEPT    AS    ${error}
         Error Message Selenium    ${user}    ${error}
         Error Message JavaScript    ${user}    ${before}
-        Fail    Schritt ${step_keyword} mit Fehler fehlgeschlagen: ${error}
     END

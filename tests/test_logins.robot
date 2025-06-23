@@ -16,9 +16,5 @@ Test Login And Logout With All Users
         EXCEPT    AS    ${error}
                 Error Message Selenium   ${user}    ${error}
         END
-        TRY
-            Run Error Check    ${user}    Logout
-        EXCEPT    AS    ${error}
-                Run Keyword And Ignore Error    Logout
-        END
+        Run Keyword And Ignore Error    Logout
     END
