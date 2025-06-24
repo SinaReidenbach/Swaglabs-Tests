@@ -11,21 +11,23 @@ Suite Teardown      Close Browser
 *** Test Cases ***
 Test Login And Logout With All Users
     [Documentation]    Tests login per user and logs clear and original errors to the database if any occur.
-#    [Tags]    robot:skip
+    [Tags]    robot:skip
 
-    Initialize Global Testcase
-    ${testcase}=    Set Variable    "Test Login And Logout With All Users"
+    Initialize Global Testcase And User
+    ${global_testcase}=    Set Variable    "Test Login And Logout With All Users"
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
         Log To Console    \n\n TEST: Login Test mit ${user}
         Log To Console    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         TRY
-            Run Error Check    ${user}    Login With Valid Credentials    ${user}    ${password}
+            Run Error Check    Login With Valid Credentials    ${user}    ${password}
         EXCEPT    AS    ${error}
-                Error Message Selenium   ${user}    ${error}
+                Error Message Selenium   ${error}
         END
         Run Keyword And Ignore Error    Logout
-        Set Entry If Needed    ${entries}    0    ${testcase}
-        Save Entries To Database    ${entries}
+        Set Entry If Needed    ${global_entries}    0    ${global_testcase}
+        Set Entry If Needed    ${global_entries}    1    ${user}
+        Save Entries To Database    ${global_entries}
+
         Initialize Global Entries
     END

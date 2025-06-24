@@ -50,11 +50,7 @@ Checkout
 
 
 Finish Purchase
-    [Arguments]    ${testcase}    ${user}    ${product_name}    ${price}
-    Log To Console    \n\n Schritt Kauf abschliessen
+    [Arguments]
     Click Button    id=finish
 
     Page Should Contain Element    css=h2.complete-header
-
-    Log To Console      \n\n Schritt Übergabe der Produktinfos an Sammlung Entries
-    ${entries}=    Collect Database Entries    ${testcase}    ${user}    ${product_name}    ${price}    ${None}    ${None}

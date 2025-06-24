@@ -1,3 +1,3 @@
 *** Variables ***
-@{entries}=    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
-${testcase}    "UNKNOWN"
+@{global_entries}=    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
+${global_testcase}    ${None}

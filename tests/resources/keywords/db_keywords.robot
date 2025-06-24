@@ -7,13 +7,13 @@ Resource    db_keywords.robot
 *** Keywords ***
 Save Purchase In Database
     [Documentation]    Save complete entry (with or without errors) to database
-    [Arguments]    ${testcase}    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
-    Log To Console    \n letzter Schritt Speichern in die DB (lade insert_purchase.py)
-    Log To Console    \n Daten zu speichern: user: ${user} | product_name: ${product_name} | price: ${price} | error: ${error} | error_description: ${error_description}
+    [Arguments]    ${global_testcase}    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
+    Log To Console    \nSpeichern in die DB (lade insert_purchase.py)
+    Log To Console    \nDaten zum speichern: user: ${user} | product_name: ${product_name} | price: ${price} | error: ${error} | error_description: ${error_description}
     ${run}=    Run Process
     ...    python
     ...    ../../../db/insert_purchase.py
-    ...    ${testcase}
+    ...    ${global_testcase}
     ...    ${user}
     ...    ${product_name}
     ...    ${price}
@@ -21,36 +21,31 @@ Save Purchase In Database
     ...    ${error_description}
     ...    shell=True
     ...    cwd=${CURDIR}
-    Log To Console    stdout ${run.stdout}
-    Log To Console    stderr ${run.stderr}
+    Log To Console    \nstdout ${run.stdout}
+    Log To Console    stderr ${run.stderr}\n
 Save Entries To Database
-    [Arguments]    ${entries}
-    Log To Console    \n Schritt befehl zum speichern
+    [Arguments]    ${global_entries}
 
-    ${testcase}=               Get From List    ${entries}    0
-    ${user}=                   Get From List    ${entries}    1
-    ${product_name}=           Get From List    ${entries}    2
-    ${price}=                  Get From List    ${entries}    3
-    ${error}=                  Get From List    ${entries}    4
-    ${error_description}=      Get From List    ${entries}    5
+    ${global_testcase}=        Get From List    ${global_entries}    0
+    ${user}=                   Get From List    ${global_entries}    1
+    ${product_name}=           Get From List    ${global_entries}    2
+    ${price}=                  Get From List    ${global_entries}    3
+    ${error}=                  Get From List    ${global_entries}    4
+    ${error_description}=      Get From List    ${global_entries}    5
 
-    Log To Console
-    ...    \n 💾 Datenbankeintrag: ${testcase} | ${user} | ${product_name} | ${price} | ${error} | ${error_description}
-
-    Save Purchase In Database    ${testcase}    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
+    Save Purchase In Database    ${global_testcase}    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
 
 Collect Database Entries
-    [Arguments]    ${testcase}    ${user}=${None}    ${product_name}=${None}    ${price}=${None}    ${error}=${None}    ${error_description}=${None}
-    Log To Console    \n Schritt zusammenstellen der DB Einträge
+    [Arguments]    ${global_testcase}    ${user}=${None}    ${product_name}=${None}    ${price}=${None}    ${error}=${None}    ${error_description}=${None}
 
-    Set Entry If Needed    ${entries}    0    ${testcase}
-    Set Entry If Needed    ${entries}    1    ${user}
-    Set Entry If Needed    ${entries}    2    ${product_name}
-    Set Entry If Needed    ${entries}    3    ${price}
-    Set Entry If Needed    ${entries}    4    ${error}
-    Set Entry If Needed    ${entries}    5    ${error_description}
+    Set Entry If Needed    ${global_entries}    0    ${global_testcase}
+    Set Entry If Needed    ${global_entries}    1    ${user}
+    Set Entry If Needed    ${global_entries}    2    ${product_name}
+    Set Entry If Needed    ${global_entries}    3    ${price}
+    Set Entry If Needed    ${global_entries}    4    ${error}
+    Set Entry If Needed    ${global_entries}    5    ${error_description}
 
-    RETURN    ${entries}
+    RETURN    ${global_entries}
 Set Entry If Needed
     [Arguments]    ${list}    ${index}    ${new_value}
     ${old_value}=    Get From List    ${list}    ${index}

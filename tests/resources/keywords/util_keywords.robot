@@ -42,8 +42,6 @@ Wait Until All Elements Visible
 Get Product Info
     [Documentation]    getting actual produkt infos and remove "$"
 
-    Log To Console    \n Produktinfos ermitteln
-
     ${product_name}=
     ...    Get Text
     ...    css=.cart_item .inventory_item_name
@@ -55,10 +53,9 @@ Get Product Info
     ${price}=
     ...    Evaluate
     ...    ${price_string}[1:]
-    ...
-    Log To Console    ermittelte Produktinfos: produkt_name: ${product_name} | price: ${price}
 
-    ${entries}=    Collect Database Entries    ${None}    ${None}    ${product_name}    ${price}    ${None}    ${None}
+
+    ${global_entries}=    Collect Database Entries    ${None}    ${None}    ${product_name}    ${price}    ${None}    ${None}
 
 
 Get latest Geckodriver Log
@@ -81,15 +78,17 @@ Read Latest Geckodriver Log
 Initialize Global Entries
     Log To Console    \n Entries wird initialisiert
 
-    Set Suite Variable    @{entries}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
+    Set Suite Variable    @{global_entries}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
 
-Initialize Global Testcase
+Initialize Global Testcase And User
     Log To Console    \n Testcase wird initialisiert
 
-    Set Suite Variable    ${testcase}    ${None}
+    Set Suite Variable    ${global_testcase}    ${None}
+    Set Suite Variable    ${user}    ${None}
 
-Debugging
-    [Arguments]    ${after_lines}    ${before_lines}    ${new_lines}
-    Log To Console    \n\n\n********************************************************************
-
-    Log To Console    ********************************************************************\n\n\n
+Set Entries
+    [Arguments]    ${global_testcase}    ${user}    ${product_name}    ${price}
+    Set Entry If Needed    ${global_entries}    0    ${global_testcase}
+    Set Entry If Needed    ${global_entries}    1    ${user}
+    Set Entry If Needed    ${global_entries}    2    ${product_name}
+    Set Entry If Needed    ${global_entries}    3    ${price}
