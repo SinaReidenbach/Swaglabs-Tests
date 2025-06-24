@@ -80,25 +80,9 @@ Initialize Global Entries
 
     Set Suite Variable    @{global_entries}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
 
-Initialize Global Testcase And User
-    Log To Console    \n Testcase wird initialisiert
-
-    Set Suite Variable    ${global_testcase}    ${None}
-    Set Suite Variable    ${user}    ${None}
-
 Set Entries
-    [Arguments]    ${global_testcase}    ${user}    ${product_name}    ${price}
-    Set Entry If Needed    ${global_entries}    0    ${global_testcase}
+    [Arguments]    ${testcase}    ${user}    ${product_name}    ${price}
+    Set Entry If Needed    ${global_entries}    0    ${testcase}
     Set Entry If Needed    ${global_entries}    1    ${user}
     Set Entry If Needed    ${global_entries}    2    ${product_name}
     Set Entry If Needed    ${global_entries}    3    ${price}
-
-#Delete Entries
-#            ${global_entries}=    Collect Database Entries    # @DWR: das war der erste Versuch den locked_out_user
-#            ...    ${global_testcase}                         # raus zu löschen, gerdade aufgefallen: wenn ich none
-#            ...    replace                                    # übergebe und ein wert drin ist, soll der ja normal
-#            ...    ${None}                                    # nicht überschrieben werden. das sollte der Grund sein,
-#            ...    ${None}                                    # warum es nicht läuft
-#            ...    ${None}
-#            ...    ${None}
- #           Log To Console    Entries: ${global_entries}

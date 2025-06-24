@@ -13,8 +13,7 @@ Test Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-
     ...    user which cannot log in will except
 #    [Tags]    robot:skip
 
-    Initialize Global Testcase And User
-    ${global_testcase}=    Set Variable    "Test Purchase With All Users"
+    ${testcase}    Set Variable    Test Purchase With All Users
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
         Log To Console    \n\n TEST: Purchase Test mit ${user}
@@ -42,7 +41,7 @@ Test Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-
             Error Message Selenium    ${error}
             Log To Console    \n* ${user} Collect Database Entries
             ${global_entries}=    Collect Database Entries
-            ...    ${global_testcase}
+            ...    ${testcase}
             ...    ${user}
             ...    ${product_name}
             ...    ${price}
@@ -53,7 +52,7 @@ Test Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-
             Log To Console    \n* ${user} Logout
             Run Keyword And Ignore Error    Logout
             Log To Console    \n* ${user} Set Entries
-            Set Entries    ${global_testcase}    ${user}    ${product_name}    ${price}
+            Set Entries    ${testcase}    ${user}    ${product_name}    ${price}
             Log To Console    \n* ${user} Save Entries To Database
             Save Entries To Database    ${global_entries}
         END
