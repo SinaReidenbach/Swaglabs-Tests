@@ -13,20 +13,30 @@ Error Message Selenium
     [Arguments]    ${error}
 
     ${error_lower}=    Convert To Lowercase    ${error}
+    Log To Console    error_lower: ${error_lower}
 
     FOR    ${key}    ${msg}    IN    &{ERROR_MAP}
+        Log To Console    key: ${key} | msg: ${msg}
         @{parts}=    Split String    ${key}    |
         ${found}=    Set Variable    True
-        FOR    ${part}    IN    @{parts}
-            IF    $part not in $error_lower
-                ${found}=    Set Variable    False
-                BREAK
-            END
-        END
 
-        IF    $found
-            ${error_describtion}=    Set Variable    ${msg}
+        FOR    ${part}    IN    @{parts}
+            Log To Console    ${part} in ${error_lower} ?
+
+            IF    '${part}' not in "${error_lower}"
+                ${found}=    Set Variable   False
+                Log To Console    found: ${found}
+            END
+            Log To Console    found: ${found}
+        END
+        Log To Console    \n* weiter in "FOR key msg in errormap"
+            IF    '${found}' == 'True'
+                Log To Console    found: ${found}
+                ${error_describtion}=    Set Variable    ${msg}
+                Log To Console    error_describtion: ${error_describtion}
+                Log To Console    msg: ${msg}\n
             BREAK
+
         END
     END
 

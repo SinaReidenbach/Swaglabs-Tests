@@ -92,3 +92,13 @@ Set Entries
     Set Entry If Needed    ${global_entries}    1    ${user}
     Set Entry If Needed    ${global_entries}    2    ${product_name}
     Set Entry If Needed    ${global_entries}    3    ${price}
+
+#Delete Entries
+#            ${global_entries}=    Collect Database Entries    # @DWR: das war der erste Versuch den locked_out_user
+#            ...    ${global_testcase}                         # raus zu löschen, gerdade aufgefallen: wenn ich none
+#            ...    replace                                    # übergebe und ein wert drin ist, soll der ja normal
+#            ...    ${None}                                    # nicht überschrieben werden. das sollte der Grund sein,
+#            ...    ${None}                                    # warum es nicht läuft
+#            ...    ${None}
+#            ...    ${None}
+ #           Log To Console    Entries: ${global_entries}

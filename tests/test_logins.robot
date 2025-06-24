@@ -11,7 +11,7 @@ Suite Teardown      Close Browser
 *** Test Cases ***
 Test Login And Logout With All Users
     [Documentation]    Tests login per user and logs clear and original errors to the database if any occur.
-    [Tags]    robot:skip
+#    [Tags]    robot:skip
 
     Initialize Global Testcase And User
     ${global_testcase}=    Set Variable    "Test Login And Logout With All Users"

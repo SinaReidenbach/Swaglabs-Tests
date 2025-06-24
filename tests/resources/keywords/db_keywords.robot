@@ -47,10 +47,12 @@ Collect Database Entries
 
     RETURN    ${global_entries}
 Set Entry If Needed
-    [Arguments]    ${list}    ${index}    ${new_value}
+    [Arguments]    ${list}    ${index}    ${new_value}    &{replace}
     ${old_value}=    Get From List    ${list}    ${index}
 
-    IF    $old_value is None and $new_value is not None
+    IF    $new_value == 'replace'
+        Set List Value    ${list}    ${index}    ${None}
+    ELSE IF    $old_value is None and $new_value is not None
         Set List Value    ${list}    ${index}    ${new_value}
     ELSE IF    $old_value is not None and $new_value is not None
         Log To Console    \nEINTRAG NICHT GESETZT, WEIL SONST ÜBERSCHRIEBEN an Index ${index}! Alt: ${old_value}, Neu: ${new_value}    WARN
