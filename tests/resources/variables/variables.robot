@@ -1,2 +1,2 @@
 *** Variables ***
-@{ORIGINAL}=    ${None}    ${None}    ${None}    ${None}    ${None}
+@{entries}=    ${None}    ${None}    ${None}    ${None}    ${None}

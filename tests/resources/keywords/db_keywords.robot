@@ -23,10 +23,10 @@ Save Purchase In Database
     Log To Console    stdout ${run.stdout}
     Log To Console    stderr ${run.stderr}
 Save Entries To Database
-    [Arguments]
+    [Arguments]    ${entries}
     Log To Console    \n Schritt befehl zum speichern
 
-    ${entries}=                Set Variable    @{ORIGINAL}
+#    ${entries}=                Set Variable    @{ORIGINAL}
     ${user}=                   Get From List    ${entries}    0
     ${product_name}=           Get From List    ${entries}    1
     ${price}=                  Get From List    ${entries}    2
@@ -38,27 +38,23 @@ Save Entries To Database
 
     Save Purchase In Database    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
 
-#    ${entries}=    Set Variable    ${None}
-#    Set Suite Variable    @{ORIGINAL}    @{ORIGINAL}
 Collect Database Entries
     [Arguments]    ${user}=${None}    ${product_name}=${None}    ${price}=${None}    ${error}=${None}    ${error_description}=${None}
     Log To Console    \n Schritt zusammenstellen der DB Einträge
 
-    ${original}=    Create List    ${None}    ${None}    ${None}    ${None}    ${None}
+    Set Entry If Needed    ${entries}    0    ${user}
+    Set Entry If Needed    ${entries}    1    ${product_name}
+    Set Entry If Needed    ${entries}    2    ${price}
+    Set Entry If Needed    ${entries}    3    ${error}
+    Set Entry If Needed    ${entries}    4    ${error_description}
 
-    @{new_args}=    Create List    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
-
-    @{entries}=    Create List
-
-    FOR    ${index}    IN RANGE    0    5
-        ${new}=    Get From List    ${new_args}    ${index}
-        ${old}=    Get From List    ${original}    ${index}
-        Run Keyword If    $new != '' and $new != $NONE
-        ...    Append To List    ${entries}    ${new}
-        ...  ELSE
-        ...    Append To List    ${entries}    ${old}
-    END
-    Log To Console    \n zusammengestellte Daten: ${entries}
-    Log To Console    \n ORIGINAL wird aktualisiert
-    Set Suite Variable    @{ORIGINAL}    @{entries}
     RETURN    ${entries}
+Set Entry If Needed
+    [Arguments]    ${list}    ${index}    ${new_value}
+    ${old_value}=    Get From List    ${list}    ${index}
+
+    IF    $old_value is None and $new_value is not None
+        Set List Value    ${list}    ${index}    ${new_value}
+    ELSE IF    $old_value is not None and $new_value is not None
+        Log To Console    \nEINTRAG NICHT GESETZT, WEIL SONST ÜBERSCHRIEBEN an Index ${index}! Alt: ${old_value}, Neu: ${new_value}    WARN
+    END

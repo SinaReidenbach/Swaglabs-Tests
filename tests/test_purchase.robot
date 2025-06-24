@@ -1,10 +1,12 @@
 *** Settings ***
 Resource            resources/keywords/purchase_keywords.robot
+Resource            resources/keywords/util_keywords.robot
 Resource            resources/keywords/errorhandling_keywords.robot
 Resource            resources/variables/variables.robot
 
-Suite Setup         Initialize Original And Open Browser To Login Page
+Suite Setup         Initialize Entries And Open Browser To Login Page
 Suite Teardown      Close Browser
+Library    ../.venv/Lib/site-packages/robot/libraries/Easter.py
 
 *** Test Cases ***
 Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-test-case
@@ -31,6 +33,7 @@ Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-te
             CONTINUE
         FINALLY
             Run Keyword And Ignore Error    Logout
-            Save Entries To Database
+            Save Entries To Database    ${entries}
         END
+        Initialize Entries
     END

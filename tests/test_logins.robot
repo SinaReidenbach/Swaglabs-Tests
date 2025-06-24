@@ -2,8 +2,9 @@
 Resource            resources/keywords/auth_keywords.robot
 Resource            resources/keywords/errorhandling_keywords.robot
 Resource            resources/variables/variables.robot
+Resource            resources/keywords/util_keywords.robot
 
-Suite Setup    Initialize Original And Open Browser To Login Page
+Suite Setup    Initialize Entries And Open Browser To Login Page
 
 Suite Teardown      Close Browser
 
@@ -21,5 +22,5 @@ Test Login And Logout With All Users
                 Error Message Selenium   ${user}    ${error}
         END
         Run Keyword And Ignore Error    Logout
-        Save Entries To Database
+        Save Entries To Database    ${entries}
     END

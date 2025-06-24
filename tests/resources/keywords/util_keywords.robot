@@ -12,8 +12,8 @@ ${LOGIN_URL}    https://www.saucedemo.com/
 
 
 *** Keywords ***
-Initialize Original And Open Browser To Login Page
-    Initialize Original
+Initialize Entries And Open Browser To Login Page
+    Initialize Entries
     Open Browser To Login Page
 
 Open Browser To Login Page
@@ -77,10 +77,10 @@ Read Latest Geckodriver Log
     ${geckofile}=    Get File    ${geckopath}
     RETURN    ${geckofile}
 
-Initialize Original
-    Log To Console    \n ORIGINAL wird initialisiert
+Initialize Entries
+    Log To Console    \n Entries wird initialisiert
 
-    Set Suite Variable    @{ORIGINAL}    ${None}    ${None}    ${None}    ${None}    ${None}
+    Set Suite Variable    @{entries}    ${None}    ${None}    ${None}    ${None}    ${None}
 
 Debugging
     [Arguments]    ${after_lines}    ${before_lines}    ${new_lines}
