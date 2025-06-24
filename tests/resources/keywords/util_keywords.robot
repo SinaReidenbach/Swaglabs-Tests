@@ -12,10 +12,13 @@ ${LOGIN_URL}    https://www.saucedemo.com/
 
 
 *** Keywords ***
-Initialize Global Entries And Open Browser To Login Page
-    Initialize Global Entries
-
+Initialize Global Variables And Open Browser To Login Page
+    Initialize Global Variables
     Open Browser To Login Page
+
+Initialize Global Variables
+    Set Suite Variable    @{global_entries}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
+
 
 Open Browser To Login Page
     [Documentation]    open browser, maximize the window and wait for contain of element "user-name"
@@ -54,9 +57,7 @@ Get Product Info
     ...    Evaluate
     ...    ${price_string}[1:]
 
-
-    ${global_entries}=    Collect Database Entries    ${None}    ${None}    ${product_name}    ${price}    ${None}    ${None}
-
+    Set Purchase Entries    ${product_name}    ${price}
 
 Get latest Geckodriver Log
     ${path}=   Join Path    ${OUTPUT DIR}    geckodriver-*.log
@@ -74,15 +75,3 @@ Read Latest Geckodriver Log
     [Arguments]    ${geckopath}
     ${geckofile}=    Get File    ${geckopath}
     RETURN    ${geckofile}
-
-Initialize Global Entries
-    Log To Console    \n Entries wird initialisiert
-
-    Set Suite Variable    @{global_entries}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
-
-Set Entries
-    [Arguments]    ${testcase}    ${user}    ${product_name}    ${price}
-    Set Entry If Needed    ${global_entries}    0    ${testcase}
-    Set Entry If Needed    ${global_entries}    1    ${user}
-    Set Entry If Needed    ${global_entries}    2    ${product_name}
-    Set Entry If Needed    ${global_entries}    3    ${price}

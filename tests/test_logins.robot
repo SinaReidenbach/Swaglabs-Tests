@@ -4,7 +4,7 @@ Resource            resources/keywords/errorhandling_keywords.robot
 Resource            resources/variables/variables.robot
 Resource            resources/keywords/util_keywords.robot
 
-Suite Setup    Initialize Global Entries And Open Browser To Login Page
+Suite Setup    Initialize Global Variables And Open Browser To Login Page
 
 Suite Teardown      Close Browser
 
@@ -16,17 +16,17 @@ Test Login And Logout With All Users
     ${testcase}=    Set Variable    "Test Login And Logout With All Users"
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
-        Log To Console    \n\n TEST: Login Test mit ${user}
-        Log To Console    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        Log To Console    \n\n TEST: Login Test mit ${user}\n\n
         TRY
             Run Error Check    Login With Valid Credentials    ${user}    ${password}
         EXCEPT    AS    ${error}
-                Error Message Selenium   ${error}
+#           ${result}    Set Variable    FAIL        -> ggf weitere Spalte result
+            CONTINUE
+        FINALLY
+            Run Keyword And Ignore Error    Logout
+            Set Test Entries    ${testcase}    ${user}
+            Save Entries To Database    @{global_entries}
         END
-        Run Keyword And Ignore Error    Logout
-        Set Entry If Needed    ${global_entries}    0    ${testcase}
-        Set Entry If Needed    ${global_entries}    1    ${user}
-        Save Entries To Database    ${global_entries}
-
-        Initialize Global Entries
+#       ${result}    Set Variable    PASS        -> ggf weitere Spalte result
+        Initialize Global Variables
     END

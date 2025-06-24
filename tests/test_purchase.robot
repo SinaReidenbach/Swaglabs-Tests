@@ -4,57 +4,42 @@ Resource            resources/keywords/util_keywords.robot
 Resource            resources/keywords/errorhandling_keywords.robot
 Resource            resources/variables/variables.robot
 
-Suite Setup         Initialize Global Entries And Open Browser To Login Page
+Suite Setup         Initialize Global Variables And Open Browser To Login Page
 Suite Teardown      Close Browser
 
 *** Test Cases ***
-Test Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-test-case
+Test Purchase With All Users
     [Documentation]    Tests purchase per user and logs clear and original errors to the database if any occur.
     ...    user which cannot log in will except
 #    [Tags]    robot:skip
 
+    Initialize Global Variables
     ${testcase}    Set Variable    Test Purchase With All Users
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
-        Log To Console    \n\n TEST: Purchase Test mit ${user}
-        Log To Console    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        Log To Console    \n\n TEST: Purchase Test mit ${user}\n\n
         TRY
             Login With Valid Credentials
             ...    ${user}
             ...    ${password}
         EXCEPT
-            Log To Console    \n*FEHLER BEIM EINLOGGEN
             CONTINUE
         END
+
         TRY
-            Log To Console    \n* ${user} Add Item And Go To Cart
             Run Error Check    Add Item And Go To Cart
             ${product_name}    ${price}=    Get Product Info
-            Log To Console    \n* ${user} Checkout
             Run Error Check    Checkout
-            Log To Console    \n* ${user} Finish Purchase
             Run Error Check    Finish Purchase
 
         EXCEPT    AS    ${error}
-            Log To Console    \nEntries: ${global_entries}
-            Log To Console    \n* ${user} Error Message Selenium
-            Error Message Selenium    ${error}
-            Log To Console    \n* ${user} Collect Database Entries
-            ${global_entries}=    Collect Database Entries
-            ...    ${testcase}
-            ...    ${user}
-            ...    ${product_name}
-            ...    ${price}
-            ...    ${error}
-            ...    ${None}=    Error Message Selenium    ${error}
+#           ${result}    Set Variable    FAIL        -> ggf weitere Spalte result
             CONTINUE
         FINALLY
-            Log To Console    \n* ${user} Logout
             Run Keyword And Ignore Error    Logout
-            Log To Console    \n* ${user} Set Entries
-            Set Entries    ${testcase}    ${user}    ${product_name}    ${price}
-            Log To Console    \n* ${user} Save Entries To Database
-            Save Entries To Database    ${global_entries}
+            Set Test Entries    ${testcase}    ${user}
+            Save Entries To Database    @{global_entries}
         END
-        Initialize Global Entries
+#       ${result}    Set Variable    PASS        -> ggf weitere Spalte result
+        Initialize Global Variables
     END

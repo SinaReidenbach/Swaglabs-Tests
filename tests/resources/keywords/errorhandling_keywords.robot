@@ -8,44 +8,23 @@ Resource    ../data/error_data.resource
 
 
 *** Keywords ***
-Error Message Selenium
-    [Documentation]    Konvertiert Selenium-Fehlermeldungen in verständliche Texte aus ERROR_MAP
-    [Arguments]    ${error}
-
-    ${error_lower}=    Convert To Lowercase    ${error}
-    Log To Console    error_lower: ${error_lower}
-
-    FOR    ${key}    ${msg}    IN    &{ERROR_MAP}
-        Log To Console    key: ${key} | msg: ${msg}
-        @{parts}=    Split String    ${key}    |
-        ${found}=    Set Variable    True
-
-        FOR    ${part}    IN    @{parts}
-            Log To Console    ${part} in ${error_lower} ?
-
-            IF    '${part}' not in "${error_lower}"
-                ${found}=    Set Variable   False
-                Log To Console    found: ${found}
-            END
-            Log To Console    found: ${found}
-        END
-        Log To Console    \n* weiter in "FOR key msg in errormap"
-            IF    '${found}' == 'True'
-                Log To Console    found: ${found}
-                ${error_describtion}=    Set Variable    ${msg}
-                Log To Console    error_describtion: ${error_describtion}
-                Log To Console    msg: ${msg}\n
-            BREAK
-
-        END
+Run Error Check
+    [Arguments]    ${step_keyword}    @{args}
+    ${before}=    Read Geckodriver Log
+    TRY
+        Run Keyword    ${step_keyword}    @{args}
+        Check For New JavaScript Errors    ${before}
+    EXCEPT    AS    ${error}
+        Create Error Describtion    ${error}
+        Check For New JavaScript Errors    ${before}
     END
 
-    Log    ❌ ${error_describtion} | ${error}    ERROR
+Read Geckodriver Log
+    ${geckopath}=    Get latest Geckodriver Log
+    ${before}=    Read latest Geckodriver Log    ${geckopath}
+    RETURN    ${before}
 
-    ${global_entries}=    Collect Database Entries    ${None}    ${None}    ${None}    ${None}    ${error}    ${error_describtion}
-    RETURN    ${error_describtion}
-
-Error Message JavaScript
+ Check For New JavaScript Errors
     [Arguments]    ${before}
     Sleep    2s
     ${geckopath}=    Get latest Geckodriver Log
@@ -53,9 +32,37 @@ Error Message JavaScript
     @{unique_errors}=    Extract The Current JavaScript Error    ${after}    ${before}
 
     FOR    ${error}    IN    @{unique_errors}
-        Error Message Selenium
+        Create Error Describtion
         ...    ${error}
     END
+
+Create Error Describtion
+    [Documentation]    Konvertiert Selenium-Fehlermeldungen in verständliche Texte aus ERROR_MAP
+    [Arguments]    ${error}
+
+    ${error_lower}=    Convert To Lowercase    ${error}
+
+    FOR    ${key}    ${msg}    IN    &{ERROR_MAP}
+        @{parts}=    Split String    ${key}    |
+        ${found}=    Set Variable    True
+
+        FOR    ${part}    IN    @{parts}
+            IF    '${part}' not in "${error_lower}"
+                ${found}=    Set Variable   False
+            END
+        END
+            IF    '${found}' == 'True'
+                ${error_describtion}=    Set Variable    ${msg}
+            BREAK
+
+        END
+    END
+
+    Log    ❌ ${error_describtion} | ${error}    ERROR
+
+    Set Error Entries    ${error}    ${error_describtion}
+
+    RETURN    ${error_describtion}
 
 Extract The Current JavaScript Error
     [Arguments]    ${after}    ${before}
@@ -76,33 +83,9 @@ Extract The Current JavaScript Error
 
     RETURN    ${unique_errors}
 
-Remove Matching Lines
-    [Arguments]    ${full}    ${exclude}
-    ${result}=    Create List
-    FOR    ${line}    IN    @{full}
-        Run Keyword If    '${line}' not in ${exclude}    Append To List    ${result}    ${line}
-    END
-    RETURN    ${result}
-
 Extract And Append Error
     [Arguments]    ${line}    ${error_list}
     ${lines}=    Split String    ${line}    ,
     ${error}=    Get From List    ${lines}    1
     ${error}=    Strip String    ${error}
     Run Keyword If    "${error}" not in ${error_list}    Append To List    ${error_list}    ${error}
-
-Read Geckodriver Log
-    ${geckopath}=    Get latest Geckodriver Log
-    ${before}=    Read latest Geckodriver Log    ${geckopath}
-    RETURN    ${before}
-
-Run Error Check
-    [Arguments]    ${step_keyword}    @{args}
-    ${before}=    Read Geckodriver Log
-    TRY
-        Run Keyword    ${step_keyword}    @{args}
-        Error Message JavaScript    ${before}
-    EXCEPT    AS    ${error}
-        Error Message Selenium    ${error}
-        Error Message JavaScript    ${before}
-    END
