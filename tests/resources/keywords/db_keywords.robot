@@ -7,12 +7,13 @@ Resource    db_keywords.robot
 *** Keywords ***
 Save Purchase In Database
     [Documentation]    Save complete entry (with or without errors) to database
-    [Arguments]    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
+    [Arguments]    ${testcase}    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
     Log To Console    \n letzter Schritt Speichern in die DB (lade insert_purchase.py)
     Log To Console    \n Daten zu speichern: user: ${user} | product_name: ${product_name} | price: ${price} | error: ${error} | error_description: ${error_description}
     ${run}=    Run Process
     ...    python
     ...    ../../../db/insert_purchase.py
+    ...    ${testcase}
     ...    ${user}
     ...    ${product_name}
     ...    ${price}
@@ -26,27 +27,28 @@ Save Entries To Database
     [Arguments]    ${entries}
     Log To Console    \n Schritt befehl zum speichern
 
-#    ${entries}=                Set Variable    @{ORIGINAL}
-    ${user}=                   Get From List    ${entries}    0
-    ${product_name}=           Get From List    ${entries}    1
-    ${price}=                  Get From List    ${entries}    2
-    ${error}=                  Get From List    ${entries}    3
-    ${error_description}=      Get From List    ${entries}    4
+    ${testcase}=               Get From List    ${entries}    0
+    ${user}=                   Get From List    ${entries}    1
+    ${product_name}=           Get From List    ${entries}    2
+    ${price}=                  Get From List    ${entries}    3
+    ${error}=                  Get From List    ${entries}    4
+    ${error_description}=      Get From List    ${entries}    5
 
     Log To Console
-    ...    \n 💾 Datenbankeintrag: ${user} | ${product_name} | ${price} | ${error} | ${error_description}
+    ...    \n 💾 Datenbankeintrag: ${testcase} | ${user} | ${product_name} | ${price} | ${error} | ${error_description}
 
-    Save Purchase In Database    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
+    Save Purchase In Database    ${testcase}    ${user}    ${product_name}    ${price}    ${error}    ${error_description}
 
 Collect Database Entries
-    [Arguments]    ${user}=${None}    ${product_name}=${None}    ${price}=${None}    ${error}=${None}    ${error_description}=${None}
+    [Arguments]    ${testcase}    ${user}=${None}    ${product_name}=${None}    ${price}=${None}    ${error}=${None}    ${error_description}=${None}
     Log To Console    \n Schritt zusammenstellen der DB Einträge
 
-    Set Entry If Needed    ${entries}    0    ${user}
-    Set Entry If Needed    ${entries}    1    ${product_name}
-    Set Entry If Needed    ${entries}    2    ${price}
-    Set Entry If Needed    ${entries}    3    ${error}
-    Set Entry If Needed    ${entries}    4    ${error_description}
+    Set Entry If Needed    ${entries}    0    ${testcase}
+    Set Entry If Needed    ${entries}    1    ${user}
+    Set Entry If Needed    ${entries}    2    ${product_name}
+    Set Entry If Needed    ${entries}    3    ${price}
+    Set Entry If Needed    ${entries}    4    ${error}
+    Set Entry If Needed    ${entries}    5    ${error_description}
 
     RETURN    ${entries}
 Set Entry If Needed

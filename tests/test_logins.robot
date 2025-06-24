@@ -4,7 +4,7 @@ Resource            resources/keywords/errorhandling_keywords.robot
 Resource            resources/variables/variables.robot
 Resource            resources/keywords/util_keywords.robot
 
-Suite Setup    Initialize Entries And Open Browser To Login Page
+Suite Setup    Initialize Global Entries And Open Browser To Login Page
 
 Suite Teardown      Close Browser
 
@@ -12,6 +12,9 @@ Suite Teardown      Close Browser
 Test Login And Logout With All Users
     [Documentation]    Tests login per user and logs clear and original errors to the database if any occur.
 #    [Tags]    robot:skip
+
+    Initialize Global Testcase
+    ${testcase}=    Set Variable    "Test Login And Logout With All Users"
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
         Log To Console    \n\n TEST: Login Test mit ${user}
@@ -22,5 +25,7 @@ Test Login And Logout With All Users
                 Error Message Selenium   ${user}    ${error}
         END
         Run Keyword And Ignore Error    Logout
+        Set Entry If Needed    ${entries}    0    ${testcase}
         Save Entries To Database    ${entries}
+        Initialize Global Entries
     END

@@ -4,12 +4,12 @@ import sys
 def convert_none_args(*args):
     return [None if arg == "None" else arg for arg in args]
 
-def insert_purchase(username, product_name, price, error, error_description):
-    print(f"Parameter erhalten: {username}, {product_name}, {price}, {error}, {error_description}")
+def insert_purchase(testcase, username, product_name, price, error, error_description):
+    print(f"Parameter erhalten: {testcase}, {username}, {product_name}, {price}, {error}, {error_description}")
 
     # Konvertiere "None" Strings zu echtem Python-None
-    username, product_name, price, error, error_description = convert_none_args(
-        username, product_name, price, error, error_description
+    testcase, username, product_name, price, error, error_description = convert_none_args(
+        testcase, username, product_name, price, error, error_description
     )
     connection = mysql.connector.connect(
         host="localhost",
@@ -19,14 +19,14 @@ def insert_purchase(username, product_name, price, error, error_description):
         port=3306
     )
     cursor = connection.cursor()
-    sql = "INSERT INTO purchases (username, product_name, price, error, error_description) VALUES (%s, %s, %s, %s, %s)"
-    cursor.execute(sql, (username, product_name, price, error, error_description))
-#    cursor.execute(sql, ("sina", "product_name", "2", "error", "error_description"))
+    sql = "INSERT INTO purchases (testcase, username, product_name, price, error, error_description) VALUES (%s, %s, %s, %s, %s, %s)"
+    cursor.execute(sql, (testcase, username, product_name, price, error, error_description))
+
     connection.commit()
     cursor.close()
     connection.close()
 
 if __name__ == "__main__":
-    _, username, product_name, price, error, error_description = sys.argv
+    _,testcase, username, product_name, price, error, error_description = sys.argv
 
-    insert_purchase(username, product_name, price, error, error_description)
+    insert_purchase(testcase, username, product_name, price, error, error_description)

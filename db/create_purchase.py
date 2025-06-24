@@ -13,6 +13,7 @@ def create_purchase():
     sql = (
         "CREATE TABLE IF NOT EXISTS purchases ("
             "id                 INT             AUTO_INCREMENT PRIMARY KEY, "
+            "testcase           VARCHAR(50)     NOT NULL, "
             "username           VARCHAR(50)     NULL, "
             "product_name       VARCHAR(100)    NULL, "
             "price              DECIMAL(10,2)   NULL, "

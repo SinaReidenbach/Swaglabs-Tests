@@ -12,8 +12,9 @@ ${LOGIN_URL}    https://www.saucedemo.com/
 
 
 *** Keywords ***
-Initialize Entries And Open Browser To Login Page
-    Initialize Entries
+Initialize Global Entries And Open Browser To Login Page
+    Initialize Global Entries
+
     Open Browser To Login Page
 
 Open Browser To Login Page
@@ -57,7 +58,7 @@ Get Product Info
     ...
     Log To Console    ermittelte Produktinfos: produkt_name: ${product_name} | price: ${price}
 
-    ${entries}=    Collect Database Entries    ${None}    ${product_name}    ${price}    ${None}    ${None}
+    ${entries}=    Collect Database Entries    ${None}    ${None}    ${product_name}    ${price}    ${None}    ${None}
 
 
 Get latest Geckodriver Log
@@ -77,10 +78,15 @@ Read Latest Geckodriver Log
     ${geckofile}=    Get File    ${geckopath}
     RETURN    ${geckofile}
 
-Initialize Entries
+Initialize Global Entries
     Log To Console    \n Entries wird initialisiert
 
-    Set Suite Variable    @{entries}    ${None}    ${None}    ${None}    ${None}    ${None}
+    Set Suite Variable    @{entries}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
+
+Initialize Global Testcase
+    Log To Console    \n Testcase wird initialisiert
+
+    Set Suite Variable    ${testcase}    ${None}
 
 Debugging
     [Arguments]    ${after_lines}    ${before_lines}    ${new_lines}
