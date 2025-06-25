@@ -17,11 +17,9 @@ Test Purchase With All Users
     ${testcase}    Set Variable    Test Purchase With All Users
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
-        Log To Console    \n\n TEST: Purchase Test mit ${user}\n\n
+        Log To Console    \n\n[ DEBUG ] Purchase Test mit ${user}\n\n
         TRY
-            Login With Valid Credentials
-            ...    ${user}
-            ...    ${password}
+            Login With Valid Credentials    ${user}
         EXCEPT
             CONTINUE
         END
@@ -31,15 +29,16 @@ Test Purchase With All Users
             ${product_name}    ${price}=    Get Product Info
             Run Error Check    Checkout
             Run Error Check    Finish Purchase
-
+            Set Purchase Entries    ${product_name}    ${price}
+            Write To Global    4    PASS
         EXCEPT    AS    ${error}
-#           ${result}    Set Variable    FAIL        -> ggf weitere Spalte result
+            Write To Global    4    FAIL
             CONTINUE
         FINALLY
-            Run Keyword And Ignore Error    Logout
             Set Test Entries    ${testcase}    ${user}
             Save Entries To Database    @{global_entries}
+            Log To Console    FINALLY: global_entries: @{global_entries}
+            Run Keyword And Ignore Error    Logout
+            Initialize Global Variables
         END
-#       ${result}    Set Variable    PASS        -> ggf weitere Spalte result
-        Initialize Global Variables
     END

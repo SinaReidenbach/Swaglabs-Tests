@@ -17,6 +17,7 @@ def create_purchase():
             "username           VARCHAR(50)     NULL, "
             "product_name       VARCHAR(100)    NULL, "
             "price              DECIMAL(10,2)   NULL, "
+            "result             VARCHAR(5)      NOT NULL, "
             "error              LONGTEXT        NULL, "
             "error_description  LONGTEXT        NULL, "
             "purchase_date      TIMESTAMP       DEFAULT CURRENT_TIMESTAMP"

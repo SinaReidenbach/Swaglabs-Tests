@@ -1,7 +1,7 @@
 *** Settings ***
 Library     Collections
 Library     SeleniumLibrary
-Resource    ../keywords/util_keywords.robot
+Resource    ./util_keywords.robot
 Resource    ../data/login_data.resource
 
 
@@ -27,17 +27,7 @@ Input Login Data
     ...    id=password
     ...    ${password}
 
-Login With Valid Credentials
-    [Arguments]    ${username}    ${password}
-
-    Input Text
-    ...    id=user-name
-    ...    ${username}
-
-    Input Text
-    ...    id=password
-    ...    ${password}
-
+Click Login Button
     Click Button    id=login-button
     Sleep    1s
 
@@ -61,7 +51,13 @@ Login With Valid Credentials
         Fail    Login fehlgeschlagen: Weder Menü noch Fehlermeldung sichtbar – unbekannter Zustand
     END
 
-Logout
+Login With Valid Credentials
+    [Arguments]    ${user}
+    ${password}=    Get Password    ${user}
+    Input Login Data    ${user}    ${password}
+    Click Login Button
+
+Click Burger Menu
     Sleep    0.5s
 
     Wait Until Element Is Visible
@@ -70,6 +66,7 @@ Logout
 
     Click Element    id=react-burger-menu-btn
 
+Click Logout
     Sleep    0.5s
 
     Wait Until Element Is Visible
@@ -77,3 +74,7 @@ Logout
     ...    timeout=5s
 
     Click Element    id=logout_sidebar_link
+
+Logout
+    Click Burger Menu
+    Click Logout

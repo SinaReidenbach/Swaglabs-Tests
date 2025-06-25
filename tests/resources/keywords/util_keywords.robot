@@ -4,7 +4,7 @@ Library     OperatingSystem
 Library     String
 Library     Collections
 
-Resource    db_keywords.robot
+Resource    ./db_keywords.robot
 
 *** Variables ***
 ${BROWSER}      headlessfirefox
@@ -17,7 +17,7 @@ Initialize Global Variables And Open Browser To Login Page
     Open Browser To Login Page
 
 Initialize Global Variables
-    Set Suite Variable    @{global_entries}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
+    Set Suite Variable    @{global_entries}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
 
 
 Open Browser To Login Page
@@ -44,7 +44,6 @@ Wait Until All Elements Visible
 
 Get Product Info
     [Documentation]    getting actual produkt infos and remove "$"
-
     ${product_name}=
     ...    Get Text
     ...    css=.cart_item .inventory_item_name
@@ -56,8 +55,7 @@ Get Product Info
     ${price}=
     ...    Evaluate
     ...    ${price_string}[1:]
-
-    Set Purchase Entries    ${product_name}    ${price}
+    RETURN    ${product_name}    ${price}
 
 Get latest Geckodriver Log
     ${path}=   Join Path    ${OUTPUT DIR}    geckodriver-*.log
@@ -75,3 +73,10 @@ Read Latest Geckodriver Log
     [Arguments]    ${geckopath}
     ${geckofile}=    Get File    ${geckopath}
     RETURN    ${geckofile}
+
+Remove All Items From Cart
+    Click Element    class:shopping_cart_link
+    ${remove_buttons}=    Get WebElements    xpath=//button[contains(text(), 'Remove')]
+    FOR    ${btn}    IN    @{remove_buttons}
+        Click Element    ${btn}
+    END

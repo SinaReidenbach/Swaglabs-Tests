@@ -2,7 +2,8 @@
 Library     Collections
 Library     String
 Library     SeleniumLibrary
-Resource    util_keywords.robot
+Library     ./python/log_diff.py
+Resource    ./util_keywords.robot
 Resource    ../data/login_data.resource
 Resource    ../data/error_data.resource
 
@@ -15,8 +16,9 @@ Run Error Check
         Run Keyword    ${step_keyword}    @{args}
         Check For New JavaScript Errors    ${before}
     EXCEPT    AS    ${error}
-        Create Error Describtion    ${error}
+        Create Error Describtion    ${error}    #ggf überflüssig?
         Check For New JavaScript Errors    ${before}
+        Fail    ${error}
     END
 
 Read Geckodriver Log
@@ -39,7 +41,6 @@ Read Geckodriver Log
 Create Error Describtion
     [Documentation]    Konvertiert Selenium-Fehlermeldungen in verständliche Texte aus ERROR_MAP
     [Arguments]    ${error}
-
     ${error_lower}=    Convert To Lowercase    ${error}
 
     FOR    ${key}    ${msg}    IN    &{ERROR_MAP}
@@ -47,7 +48,7 @@ Create Error Describtion
         ${found}=    Set Variable    True
 
         FOR    ${part}    IN    @{parts}
-            IF    '${part}' not in "${error_lower}"
+            IF    $part not in $error_lower
                 ${found}=    Set Variable   False
             END
         END
@@ -59,10 +60,7 @@ Create Error Describtion
     END
 
     Log    ❌ ${error_describtion} | ${error}    ERROR
-
     Set Error Entries    ${error}    ${error_describtion}
-
-    RETURN    ${error_describtion}
 
 Extract The Current JavaScript Error
     [Arguments]    ${after}    ${before}
@@ -70,11 +68,7 @@ Extract The Current JavaScript Error
     ${after_lines}=    Split To Lines    ${after}
     ${before_lines}=   Split To Lines    ${before}
 
-    ${new_lines}=    Create List
-
-    FOR    ${line}    IN    @{after_lines}
-        Run Keyword If    '${line}' not in ${before_lines}    Append To List    ${new_lines}    ${line}
-    END
+    @{new_lines}=       Extract New Log Lines    ${after_lines}    ${before_lines}    #log_diff.py anschauen und verstehen
 
     ${unique_errors}=    Create List
     FOR    ${line}    IN    @{new_lines}
