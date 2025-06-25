@@ -12,17 +12,9 @@ ${LOGIN_URL}    https://www.saucedemo.com/
 
 
 *** Keywords ***
-Initialize Global Variables And Open Browser To Login Page
-    Initialize Global Variables
-    Open Browser To Login Page
-
-Initialize Global Variables
-    Set Suite Variable    @{global_entries}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
-
-
-Open Browser To Login Page
-    [Documentation]    open browser, maximize the window and wait for contain of element "user-name"
-
+Reset Global And Open Browser To Login Page
+    [Documentation]    reset global, open browser, maximize the window and wait for it to contain the element "user-name"
+    Reset Global
     Open Browser
     ...    ${LOGIN_URL}
     ...    ${BROWSER}

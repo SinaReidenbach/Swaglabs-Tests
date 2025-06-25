@@ -17,11 +17,14 @@ $resultsPath = Join-Path $resultsRoot $timestamp
 New-Item -ItemType Directory -Path $resultsPath | Out-Null
 
 ## Tests ausführen und Ergebnis in neuen Ordner speichern
-robot --outputdir "$resultsPath" tests/
+robot --outputdir "$resultsPath"                      tests/
+#robot --outputdir "$resultsPath" --include login      tests/
+#robot --outputdir "$resultsPath" --include purchase   tests/
 
 Write-Host "Tests wurden ausgeführt in: $resultsPath"
-Start-Process "$resultsPath\log.html"
-
+if (Test-Path -Path $resultsPath\log.html) {
+    Start-Process "$resultsPath\log.html"
+}
 
 # Maximal 10 Ergebnisordner behalten, ältere löschen
 $maxFolders = 10
