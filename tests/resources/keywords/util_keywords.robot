@@ -5,6 +5,7 @@ Library     String
 Library     Collections
 
 Resource    ./db_keywords.robot
+Resource    ./purchase_keywords.robot
 
 *** Variables ***
 ${BROWSER}      headlessfirefox
@@ -66,9 +67,29 @@ Read Latest Geckodriver Log
     ${geckofile}=    Get File    ${geckopath}
     RETURN    ${geckofile}
 
+#Remove All Items From Cart
+#    Click Element    class:shopping_cart_link
+#    ${remove_buttons}=    Get WebElements    xpath=//button[contains(text(), 'Remove')]
+#    FOR    ${btn}    IN    @{remove_buttons}
+#        Click Element    ${btn}
+#    END
+
 Remove All Items From Cart
-    Click Element    class:shopping_cart_link
-    ${remove_buttons}=    Get WebElements    xpath=//button[contains(text(), 'Remove')]
-    FOR    ${btn}    IN    @{remove_buttons}
-        Click Element    ${btn}
+    [Arguments]    ${user}
+    IF    '${user}' == 'problem_user' or '${user}' == 'error_user'
+        Login With Valid Credentials    ${user}
+        Go To Cart
+        WHILE    ${True}
+            ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    id=remove-sauce-labs-bike-light
+            IF    not ${is_visible}
+                BREAK
+            END
+            Click Element    id=remove-sauce-labs-bike-light
+        END
+        Screenshot    screenshot_after_remove_${user}
+        Run Keyword And Ignore Error    Logout
     END
+
+Screenshot
+    [Arguments]    ${screen_name}
+    Capture Page Screenshot    ${screen_name}.png

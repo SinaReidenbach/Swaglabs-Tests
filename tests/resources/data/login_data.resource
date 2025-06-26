@@ -8,6 +8,6 @@
 ...             visual_user=secret_sauce
 ...             non_existing_user=secret_sauce
 
-&{ACCOUNTS_TEST}
-...             standard_user=secret_sauce
-...             locked_out_user=secret_sauce
+&{ACCOUNTS_FOR_REMOVE}
+...            problem_user=secret_sauce
+...            error_user=secret_sauce

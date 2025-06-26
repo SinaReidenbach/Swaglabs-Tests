@@ -2,7 +2,6 @@
 Resource            resources/keywords/purchase_keywords.robot
 Resource            resources/keywords/util_keywords.robot
 Resource            resources/keywords/errorhandling_keywords.robot
-Resource            resources/variables/variables.robot
 
 Suite Setup         Reset Global And Open Browser To Login Page
 Suite Teardown      Close Browser
@@ -14,6 +13,8 @@ Test Purchase With All Users
     [Tags]    purchase   # robot:skip
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
+        Remove All Items From Cart    ${user}
+
         TRY
             Login With Valid Credentials    ${user}
         EXCEPT

@@ -1,7 +1,6 @@
 *** Settings ***
 Resource            resources/keywords/auth_keywords.robot
 Resource            resources/keywords/errorhandling_keywords.robot
-Resource            resources/variables/variables.robot
 Resource            resources/keywords/util_keywords.robot
 
 Suite Setup    Reset Global And Open Browser To Login Page

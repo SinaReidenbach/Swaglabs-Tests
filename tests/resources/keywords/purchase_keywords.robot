@@ -12,7 +12,9 @@ Add Item And Go To Cart
     ...    timeout=5s
 
     Click Button    xpath=//button[contains(@id,"add-to-cart")]
+    Go To Cart
 
+Go To Cart
     Wait Until Element Is Visible
     ...    id=shopping_cart_container
     ...    timeout=5s
