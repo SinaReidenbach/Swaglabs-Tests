@@ -1,9 +1,5 @@
 *** Settings ***
-Library     SeleniumLibrary
-Resource    ./util_keywords.robot
-Resource    ./auth_keywords.robot
-Resource    ./db_keywords.robot
-
+Resource    ../init.robot
 
 *** Keywords ***
 Add Item And Go To Cart

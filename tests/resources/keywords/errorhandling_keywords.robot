@@ -1,11 +1,5 @@
 *** Settings ***
-Library     Collections
-Library     String
-Library     SeleniumLibrary
-Library     ./python/log_diff.py
-Resource    ./util_keywords.robot
-Resource    ../data/login_data.resource
-Resource    ../data/error_data.resource
+Resource    ../init.robot
 
 
 *** Keywords ***
