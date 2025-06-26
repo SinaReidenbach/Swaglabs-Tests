@@ -1,5 +1,8 @@
 *** Settings ***
-Resource    ../init.robot
+Library     Collections
+Library     SeleniumLibrary
+Resource    ./util_keywords.robot
+Resource    ../data/login_data.resource
 
 
 *** Keywords ***

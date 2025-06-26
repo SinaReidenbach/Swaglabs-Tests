@@ -1,5 +1,11 @@
 *** Settings ***
-Resource    ../init.robot
+Library     SeleniumLibrary
+Library     OperatingSystem
+Library     String
+Library     Collections
+
+Resource    ./db_keywords.robot
+Resource    ./purchase_keywords.robot
 
 *** Variables ***
 ${BROWSER}      headlessfirefox

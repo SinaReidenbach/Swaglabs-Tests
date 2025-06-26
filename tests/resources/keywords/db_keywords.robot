@@ -1,5 +1,8 @@
 *** Settings ***
-Resource    ../init.robot
+Library     Process
+Resource    ./util_keywords.robot
+Resource    ./auth_keywords.robot
+Resource    ./db_keywords.robot
 
 *** Keywords ***
 Save Entries To Database
