@@ -1,21 +1,23 @@
 *** Settings ***
 Resource            resources/keywords/purchase_keywords.robot
-Resource            resources/keywords/util_keywords.robot
+Resource            resources/keywords/auth_keywords.robot
+Resource            resources/data/login_data.resource
 Resource            resources/keywords/errorhandling_keywords.robot
 
-Suite Setup         Reset Global And Open Browser To Login Page
+Suite Setup         Open Browser To Login Page
 Suite Teardown      Close Browser
+
 
 *** Test Cases ***
 Test Purchase With All Users
     [Documentation]    Tests purchase per user and logs clear and original errors to the database if any occur.
     ...    user which cannot log in will except
-    [Tags]    purchase   # robot:skip
+    [Tags]    purchase
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
-
+        Init EventLog Per User    ${user}
         TRY
-            Login With Valid Credentials    ${user}
+            Login With Valid Credentials    ${user}    ${password}
         EXCEPT
             CONTINUE
         END
@@ -26,15 +28,11 @@ Test Purchase With All Users
             Run Error Check    Checkout
             Run Error Check    Finish Purchase
             Set Purchase Entries    ${product_name}    ${price}
-            Write To Global    4    PASS
         EXCEPT    AS    ${error}
-            Write To Global    4    FAIL
             Run Keyword And Ignore Error    Remove All Items From Cart    ${user}
             CONTINUE
         FINALLY
-            Set Test Entries    ${TEST_NAME}    ${user}
             Save Entries To Database
             Run Keyword And Ignore Error    Logout
-            Reset Global
         END
     END

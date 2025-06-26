@@ -7,7 +7,3 @@
 ...             error_user=secret_sauce
 ...             visual_user=secret_sauce
 ...             non_existing_user=secret_sauce
-
-&{ACCOUNTS_FOR_REMOVE}
-...            problem_user=secret_sauce
-...            error_user=secret_sauce

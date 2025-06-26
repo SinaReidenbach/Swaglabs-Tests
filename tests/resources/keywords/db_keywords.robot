@@ -1,53 +1,115 @@
 *** Settings ***
+Library     Collections
 Library     Process
-Resource    ./util_keywords.robot
-Resource    ./auth_keywords.robot
-Resource    ./db_keywords.robot
+
+
+*** Variables ***
+${EVENT_LOG}    ${EMPTY}
+
 
 *** Keywords ***
 Save Entries To Database
     [Documentation]    Save complete entry (with or without errors) to database
 
-    ${testcase}
-    ...    ${user}
-    ...    ${product_name}
-    ...    ${price}
-    ...    ${result}
-    ...    ${error}
-    ...    ${error_description}=
-    ...    Set Variable    @{GLOBAL_ENTRIES}
+    ${testcase}=    Set Variable    ${EVENT_LOG['testcase']}
+    ${user}=    Set Variable    ${EVENT_LOG['username']}
+    ${has_purchases}=    Evaluate    'purchases' in ${EVENT_LOG}
+    IF    ${has_purchases}
+        ${purchases}=    Set Variable    ${EVENT_LOG['purchases']}
+    ELSE
+        ${empty_purchase}=    Create Dictionary    product_name=${None}    price=${None}
+        @{purchases}=    Create List    ${empty_purchase}
+    END
+    ${errors}=    Evaluate    ${EVENT_LOG}.get('errors', [])
 
-    ${run}=    Run Process
-    ...    python
-    ...    ../../../db/insert_purchase.py
-    ...    ${testcase}
-    ...    ${user}
-    ...    ${product_name}
-    ...    ${price}
-    ...    ${result}
-    ...    ${error}
-    ...    ${error_description}
-    ...    shell=True
-    ...    cwd=${CURDIR}
+    FOR    ${purchase}    IN    @{purchases}
+        ${product_name}=    Set Variable    ${purchase['product_name']}
+        ${price}=    Set Variable    ${purchase['price']}
 
-Reset Global
-    Set Suite Variable    @{GLOBAL_ENTRIES}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}    ${None}
+        IF    $errors == []
+            Run Process
+            ...    python
+            ...    ../../../db/insert_purchase.py
+            ...    ${testcase}
+            ...    ${user}
+            ...    ${product_name}
+            ...    ${price}
+            ...    PASS
+            ...    ${None}
+            ...    ${None}
+            ...    shell=True
+            ...    cwd=${CURDIR}
+        END
+        FOR    ${error}    IN    @{errors}
+            ${err}=    Set Variable    ${error['error']}
+            ${error_description}=    Set Variable    ${error['error_description']}
+            ${error_source}=    Set Variable    ${error['error_source']}
+            Log To Console    ${error_source}
+            IF    'SELENIUM' in $error_source
+                ${result}=    Set Variable    FAIL
+            ELSE
+                ${result}=    Set Variable    ${None}
+            END
+            ${run}=    Run Process
+            ...    python
+            ...    ../../../db/insert_purchase.py
+            ...    ${testcase}
+            ...    ${user}
+            ...    ${product_name}
+            ...    ${price}
+            ...    ${result}
+            ...    ${err}
+            ...    ${error_description}
+            ...    shell=True
+            ...    cwd=${CURDIR}
 
-Write To Global
-    [Arguments]    ${index}    ${new_value}
-    Set List Value    ${GLOBAL_ENTRIES}    ${index}    ${new_value}
+            Log To Console    ${run.stderr}
+        END
+    END
 
-Set Test Entries
-    [Arguments]    ${testcase}    ${user}
-    Write To Global    0    ${testcase}
-    Write To Global    1    ${user}
+Init EventLog Per User
+    [Arguments]    ${user}
+
+    ${entry}=    Create Dictionary
+    ...    testcase=${TEST_NAME}
+    ...    username=${user}
+    Set Suite Variable    ${EVENT_LOG}    ${entry}
+    Log To Console    .
 
 Set Error Entries
-    [Arguments]    ${error}    ${error_describtion}
-    Write To Global    5    ${error}
-    Write To Global    6    ${error_describtion}
+    [Documentation]    Set values for ${error} and ${error_description}
+    [Arguments]    ${error}    ${error_description}    ${error_source}
+
+    ${error}=    Create Dictionary
+    ...    error=${error}
+    ...    error_description=${error_description}
+    ...    error_source=${error_source}
+
+    ${has_errors}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${EVENT_LOG}    errors
+    IF    '${has_errors}' == 'PASS'
+        ${current_errors}=    Get From Dictionary    ${EVENT_LOG}    errors
+    ELSE
+        ${current_errors}=    Create List
+    END
+    Append To List    ${current_errors}    ${error}
+    Set To Dictionary    ${EVENT_LOG}    errors=${current_errors}
 
 Set Purchase Entries
+    [Documentation]    Set values for ${product_name} and ${price}
     [Arguments]    ${product_name}    ${price}
-    Write To Global    2    ${product_name}
-    Write To Global    3    ${price}
+
+    ${purchase}=    Create Dictionary
+    ...    product_name=${product_name}
+    ...    price=${price}
+
+    ${has_purchases}=    Dictionary Should Contain Key    ${EVENT_LOG}    purchases
+    IF    '${has_purchases}' == 'PASS'
+        ${current_purchases}=    Get From Dictionary    ${EVENT_LOG}    purchases
+    ELSE
+        ${current_purchases}=    Create List
+    END
+    Append To List    ${current_purchases}    ${purchase}
+    Set To Dictionary    ${EVENT_LOG}    purchases=${current_purchases}
+
+    @{purchases}=    Create List    ${purchase}
+    Set To Dictionary    ${EVENT_LOG}    purchases=${purchases}

@@ -1,36 +1,43 @@
 *** Settings ***
 Library     Collections
-Library     String
 Library     SeleniumLibrary
 Library     ./python/log_diff.py
 Resource    ./util_keywords.robot
-Resource    ../data/login_data.resource
 Resource    ../data/error_data.resource
 
 
 *** Keywords ***
 Run Error Check
+    [Documentation]    performs an error check for a given keyword and creates an error description
     [Arguments]    ${step_keyword}    @{args}
+
     ${before}=    Read Geckodriver Log
+
     TRY
         Run Keyword    ${step_keyword}    @{args}
-        Check For New JavaScript Errors    ${before}
     EXCEPT    AS    ${error}
-        Create Error Describtion    ${error}    #ggf überflüssig?
-        Check For New JavaScript Errors    ${before}
+        Create Error Describtion    ${error}
         Fail    ${error}
+    FINALLY
+        Check For New JavaScript Errors    ${before}
     END
 
 Read Geckodriver Log
-    ${geckopath}=    Get latest Geckodriver Log
-    ${before}=    Read latest Geckodriver Log    ${geckopath}
+    [Documentation]    Get the latest Geckodriver Log, reading and return the complete log
+
+    ${geckopath}=    Get Latest Geckodriver Log
+    ${before}=    Read Latest Geckodriver Log    ${geckopath}
+
     RETURN    ${before}
 
  Check For New JavaScript Errors
+    [Documentation]    Get the latest Geckodriver Log, reading and extract JavaScript errors.
+    ...    In connection create an error describtion
     [Arguments]    ${before}
+
     Sleep    2s
-    ${geckopath}=    Get latest Geckodriver Log
-    ${after}=    Read latest Geckodriver Log    ${geckopath}
+    ${geckopath}=    Get Latest Geckodriver Log
+    ${after}=    Read Latest Geckodriver Log    ${geckopath}
     @{unique_errors}=    Extract The Current JavaScript Error    ${after}    ${before}
 
     FOR    ${error}    IN    @{unique_errors}
@@ -39,47 +46,64 @@ Read Geckodriver Log
     END
 
 Create Error Describtion
-    [Documentation]    Konvertiert Selenium-Fehlermeldungen in verständliche Texte aus ERROR_MAP
+    [Documentation]    Convert error messages into understandable texts from ERROR_MAP
     [Arguments]    ${error}
-    ${error_lower}=    Convert To Lowercase    ${error}
 
+    ${error_lower}=    Convert To Lowercase    ${error}
     FOR    ${key}    ${msg}    IN    &{ERROR_MAP}
         @{parts}=    Split String    ${key}    |
         ${found}=    Set Variable    True
 
         FOR    ${part}    IN    @{parts}
             IF    $part not in $error_lower
-                ${found}=    Set Variable   False
+                ${found}=    Set Variable    False
             END
         END
-            IF    '${found}' == 'True'
-                ${error_describtion}=    Set Variable    ${msg}
-            BREAK
 
+        IF    '${found}' == 'True'
+            ${error_description}=    Set Variable    ${msg}
+            @{error_description_split}=    Split String    ${msg}    |
+            BREAK
         END
     END
 
-    Log    ❌ ${error_describtion} | ${error}    ERROR
-    Set Error Entries    ${error}    ${error_describtion}
+    Log    ❌ ${error_description} | ${error}    ERROR
+    Set Error Entries    ${error}    ${error_description}    ${error_description_split[0]}
 
 Extract The Current JavaScript Error
+    [Documentation]    Compare the error messages before and after executing the keyword and
+    ...    determine the new error message
     [Arguments]    ${after}    ${before}
 
-    ${after_lines}=    Split To Lines    ${after}
-    ${before_lines}=   Split To Lines    ${before}
+    ${after_lines}=
+    ...    Split To Lines    ${after}
+    ${before_lines}=
+    ...    Split To Lines    ${before}
 
-    @{new_lines}=       Extract New Log Lines    ${after_lines}    ${before_lines}    #log_diff.py anschauen und verstehen
+    @{new_lines}=
+    ...    Extract New Log Lines
+    ...    ${after_lines}
+    ...    ${before_lines}
 
-    ${unique_errors}=    Create List
+    @{unique_errors}=    Create List
+    ${js_error}=    Set Variable    JavaScript error
     FOR    ${line}    IN    @{new_lines}
-        Run Keyword If    'JavaScript error' in '${line}'    Run Keyword    Extract And Append Error    ${line}    ${unique_errors}
+        IF    $js_error in $line and $line not in $unique_errors
+            Append To List    ${unique_errors}    ${line}
+        END
     END
 
     RETURN    ${unique_errors}
 
 Extract And Append Error
+    [Documentation]    Splits the string at "," ->writes to a list, takes the first list entry and
+    ...    removes all spaces from it
     [Arguments]    ${line}    ${error_list}
+
     ${lines}=    Split String    ${line}    ,
     ${error}=    Get From List    ${lines}    1
     ${error}=    Strip String    ${error}
-    Run Keyword If    "${error}" not in ${error_list}    Append To List    ${error_list}    ${error}
+
+    IF    $error not in $error_list
+        Append To List    ${error_list}    ${error}
+    END
