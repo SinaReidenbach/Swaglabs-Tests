@@ -13,7 +13,6 @@ Test Purchase With All Users
     [Tags]    purchase   # robot:skip
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
-        Remove All Items From Cart    ${user}
 
         TRY
             Login With Valid Credentials    ${user}
@@ -30,6 +29,7 @@ Test Purchase With All Users
             Write To Global    4    PASS
         EXCEPT    AS    ${error}
             Write To Global    4    FAIL
+            Run Keyword And Ignore Error    Remove All Items From Cart    ${user}
             CONTINUE
         FINALLY
             Set Test Entries    ${TEST_NAME}    ${user}

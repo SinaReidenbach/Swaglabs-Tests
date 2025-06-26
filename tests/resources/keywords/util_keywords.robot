@@ -13,6 +13,10 @@ ${LOGIN_URL}    https://www.saucedemo.com/
 
 
 *** Keywords ***
+Screenshot
+    [Arguments]    ${screen_name}
+    Capture Page Screenshot    ${screen_name}.png
+
 Reset Global And Open Browser To Login Page
     [Documentation]    reset global, open browser, maximize the window and wait for it to contain the element "user-name"
     Reset Global
@@ -67,29 +71,13 @@ Read Latest Geckodriver Log
     ${geckofile}=    Get File    ${geckopath}
     RETURN    ${geckofile}
 
-#Remove All Items From Cart
-#    Click Element    class:shopping_cart_link
-#    ${remove_buttons}=    Get WebElements    xpath=//button[contains(text(), 'Remove')]
-#    FOR    ${btn}    IN    @{remove_buttons}
-#        Click Element    ${btn}
-#    END
-
 Remove All Items From Cart
     [Arguments]    ${user}
-    IF    '${user}' == 'problem_user' or '${user}' == 'error_user'
-        Login With Valid Credentials    ${user}
-        Go To Cart
-        WHILE    ${True}
-            ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    id=remove-sauce-labs-bike-light
-            IF    not ${is_visible}
-                BREAK
-            END
-            Click Element    id=remove-sauce-labs-bike-light
-        END
-        Screenshot    screenshot_after_remove_${user}
-        Run Keyword And Ignore Error    Logout
+    Go To Cart
+
+    ${remove_buttons}=    Get WebElements    xpath=//button[contains(text(), 'Remove')]
+    FOR    ${btn}    IN    @{remove_buttons}
+        Click Element    ${btn}
     END
 
-Screenshot
-    [Arguments]    ${screen_name}
-    Capture Page Screenshot    ${screen_name}.png
+    Screenshot    screenshot_after_remove_${user}
