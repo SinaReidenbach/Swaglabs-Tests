@@ -44,7 +44,6 @@ Save Entries To Database
             ${err}=    Set Variable    ${error['error']}
             ${error_description}=    Set Variable    ${error['error_description']}
             ${error_source}=    Set Variable    ${error['error_source']}
-            Log To Console    ${error_source}
             IF    'SELENIUM' in $error_source
                 ${result}=    Set Variable    FAIL
             ELSE
@@ -83,14 +82,7 @@ Set Error Entries
     ...    error_description=${error_description}
     ...    error_source=${error_source}
 
-    ${has_errors}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${EVENT_LOG}    errors
-    IF    ${has_errors}
-        ${current_errors}=    Get From Dictionary    ${EVENT_LOG}    errors
-    ELSE
-        ${current_errors}=    Create List
-    END
-    Append To List    ${current_errors}    ${error}
-    Set To Dictionary    ${EVENT_LOG}    errors=${current_errors}
+    Add To Dictionary    errors    ${error}
 
 Set Purchase Entries
     [Documentation]    Set values for ${product_name} and ${price}
@@ -100,11 +92,15 @@ Set Purchase Entries
     ...    product_name=${product_name}
     ...    price=${price}
 
-    ${has_purchases}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${EVENT_LOG}    purchases
-    IF    ${has_purchases}
-        ${current_purchases}=    Get From Dictionary    ${EVENT_LOG}    purchases
+    Add To Dictionary    purchases    ${purchase}
+
+Add To Dictionary
+    [Arguments]    ${dict_name}    ${dict}
+    ${has_entry}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${EVENT_LOG}    ${dict_name}
+    IF    ${has_entry}
+        ${current}=    Get From Dictionary    ${EVENT_LOG}    ${dict_name}
     ELSE
-        ${current_purchases}=    Create List
+        ${current}=    Create List
     END
-    Append To List    ${current_purchases}    ${purchase}
-    Set To Dictionary    ${EVENT_LOG}    purchases=${current_purchases}
+    Append To List    ${current}    ${dict}
+    Set To Dictionary    ${EVENT_LOG}    ${dict_name}=${current}
