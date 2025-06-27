@@ -27,7 +27,7 @@ Save Entries To Database
         ${price}=    Set Variable    ${purchase['price']}
 
         IF    $errors == []
-            Run Process
+            ${run}=    Run Process
             ...    python
             ...    ../../../db/insert_purchase.py
             ...    ${testcase}
@@ -62,8 +62,6 @@ Save Entries To Database
             ...    ${error_description}
             ...    shell=True
             ...    cwd=${CURDIR}
-
-            Log To Console    ${run.stderr}
         END
     END
 
@@ -86,7 +84,7 @@ Set Error Entries
     ...    error_source=${error_source}
 
     ${has_errors}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${EVENT_LOG}    errors
-    IF    '${has_errors}' == 'PASS'
+    IF    ${has_errors}
         ${current_errors}=    Get From Dictionary    ${EVENT_LOG}    errors
     ELSE
         ${current_errors}=    Create List
@@ -102,14 +100,11 @@ Set Purchase Entries
     ...    product_name=${product_name}
     ...    price=${price}
 
-    ${has_purchases}=    Dictionary Should Contain Key    ${EVENT_LOG}    purchases
-    IF    '${has_purchases}' == 'PASS'
+    ${has_purchases}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${EVENT_LOG}    purchases
+    IF    ${has_purchases}
         ${current_purchases}=    Get From Dictionary    ${EVENT_LOG}    purchases
     ELSE
         ${current_purchases}=    Create List
     END
     Append To List    ${current_purchases}    ${purchase}
     Set To Dictionary    ${EVENT_LOG}    purchases=${current_purchases}
-
-    @{purchases}=    Create List    ${purchase}
-    Set To Dictionary    ${EVENT_LOG}    purchases=${purchases}
