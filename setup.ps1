@@ -21,7 +21,7 @@ else {
     Write-Host "❗ requirements.txt nicht gefunden!"
 }
 
-# Schritt 4: Docker Desktop starten
+# Schritt 4: "Docker Desktop" starten
 # Prüfen ob Docker läuft
 $dockerRunning = docker version --format '{{.Server.Version}}' 2>$null
 
@@ -74,20 +74,18 @@ if (-not $dockerRunning) {
 Write-Host "`n🐳 Starte Docker-Container (MySQL & phpMyAdmin)..."
 docker-compose -f ./docker/docker-compose.yml up -d
 
-# Schritt 6: Warte optional, bis MySQL wirklich erreichbar ist
+# Schritt 6: Erstelle Tabelle in DB
 Write-Host "`n⏳ Warte auf Datenbankverfügbarkeit..."
 Start-Sleep -Seconds 10
-
-# Schritt 7: Erstelle Tabelle
 Write-Host "`n🛢️  Tabelle erstellen"
 python '.\db\create_purchase.py'
 
-# Schritt 8: Ausgabe der Zugänge
+# Schritt 7: Ausgabe der Zugänge
 Write-Host "`n✅ Setup abgeschlossen!"
 Write-Host "Datenbank läuft auf:     localhost:3306"
 Write-Host "phpMyAdmin erreichbar:   http://localhost:8080"
 Write-Host "Benutzername:            swaguser"
 Write-Host "Passwort:                swagpass"
 
-# Schritt 9: Hinweis auf Teststart
+# Schritt 8: Hinweis auf Teststart
 Write-Host "`n📄 Starte Tests mit: .\run_tests.ps1" -ForegroundColor Green

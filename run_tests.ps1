@@ -19,7 +19,7 @@ New-Item -ItemType Directory -Path $resultsPath | Out-Null
 ## Tests ausführen und Ergebnis in neuen Ordner speichern
 robot --outputdir "$resultsPath"                      tests/
 #robot --outputdir "$resultsPath" --include login      tests/
-#robot --outputdir "$resultsPath"  --include purchase  tests/
+#robot --outputdir "$resultsPath" --include purchase   tests/
 
 Write-Host "Tests wurden ausgeführt in: $resultsPath"
 if (Test-Path -Path $resultsPath\log.html) {
