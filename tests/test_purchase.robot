@@ -1,8 +1,10 @@
 *** Settings ***
-Resource            resources/keywords/purchase_keywords.robot
-Resource            resources/keywords/auth_keywords.robot
-Resource            resources/data/login_data.resource
-Resource            resources/keywords/errorhandling_keywords.robot
+Documentation       Purchase Test
+
+Resource            resources/keywords/purchase.robot
+Resource            resources/keywords/authentication.robot
+Resource            resources/data/login.resource
+Resource            resources/keywords/errorhandling.robot
 
 Suite Setup         Open Browser To Login Page
 Suite Teardown      Close Browser

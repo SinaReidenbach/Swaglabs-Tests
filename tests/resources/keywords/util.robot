@@ -1,8 +1,10 @@
 *** Settings ***
-Library     OperatingSystem
-Library     String
-Library     SeleniumLibrary
-Resource    ./db_keywords.robot
+Documentation       Utility Keywords
+
+Library             OperatingSystem
+Library             String
+Library             SeleniumLibrary
+Resource            ./event_log_manager.robot
 
 
 *** Variables ***

@@ -1,6 +1,8 @@
 *** Settings ***
-Library     Collections
-Library     Process
+Documentation       Event Log Keywords
+
+Library             Collections
+Library             Process
 
 
 *** Variables ***

@@ -1,9 +1,11 @@
 *** Settings ***
-Library     Collections
-Library     SeleniumLibrary
-Library     ./python/log_diff.py
-Resource    ./util_keywords.robot
-Resource    ../data/error_data.resource
+Documentation       Error Handling Keywords
+
+Library             Collections
+Library             SeleniumLibrary
+Library             ./python/log_diff.py
+Resource            ./util.robot
+Resource            ../data/error.resource
 
 
 *** Keywords ***

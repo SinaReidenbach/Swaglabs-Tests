@@ -1,5 +1,7 @@
 *** Settings ***
-Library     SeleniumLibrary
+Documentation       Authentication Keywords
+
+Library             SeleniumLibrary
 
 
 *** Keywords ***

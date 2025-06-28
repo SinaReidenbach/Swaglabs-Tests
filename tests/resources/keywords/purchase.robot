@@ -1,6 +1,8 @@
 *** Settings ***
-Library     SeleniumLibrary
-Resource    ./util_keywords.robot
+Documentation       Purchase Keywords
+
+Library             SeleniumLibrary
+Resource            ./util.robot
 
 
 *** Keywords ***

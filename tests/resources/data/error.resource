@@ -1,3 +1,7 @@
+*** Settings ***
+Documentation       Error Data Resource
+
+
 *** Variables ***
 &{ERROR_MAP}
 # LOG IN
