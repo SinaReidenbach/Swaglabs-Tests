@@ -7,25 +7,22 @@ Diese Anleitung beschreibt die notwendigen Schritte und Voraussetzungen, um das 
 
 ### 1.1  Systemanforderungen
 
+- Firefox: 140.0.2
 - Betriebssystem: Windows 10 oder höher
 - PowerShell 7 oder höher
 - Windows-Subsystem für Linux (WSL) Version 2 (empfohlen)
 - Git (für Versionskontrolle)
 
 
-### 1.2  Vorinstallierte Software
+### 1.2  Benötigte Software
 
 Vor dem automatischen Setup müssen folgende Programme manuell installiert sein:
 
 - Python 3.11.9 (oder höher)
-- Visual Studio Code 1.101.2 (optional, empfohlen für Entwicklung)
-- Docker Desktop 28.2.2 (inklusive Docker Engine)
-
-### 1.3  Hinweise
-- Der Port 3306 sollte nicht von anderen Anwendungen belegt sein.
-- MySQL Server und phpMyAdmin werden im Projekt als Docker-Container bereitgestellt und müssen nicht separat installiert werden.
-- Docker Desktop und WSL müssen vor der Verwendung gestartet bzw. verfügbar sein.
-- Für den Zugriff auf die Datenbank wurden eigene SQL-Keywords innerhalb von Robot Framework implementiert. Eine externe Bibliothek wie DatabaseLibrary wird nicht verwendet.
+- VSCode: 1.101.2 mit Robocorp Extension 1.13.0
+- Docker Desktop 28.2.2
+- WSL: Version 2
+- geckodriver: 0.36.0
 
 ## 2   Setup
 Ein PowerShell-Skript mit dem Namen setup.ps1 befindet sich im Projektverzeichnis. Es übernimmt folgende Aufgaben:
@@ -46,20 +43,15 @@ Ein PowerShell-Skript mit dem Namen setup.ps1 befindet sich im Projektverzeichni
     pip install -r requirements.txt
 ```
 
-#### 2.3.1  Installierte Versionen (Stand 28.06.2025)
+#### 2.3.1  zu installierende Abhängigkeiten
 
 Die nachfolgenden Tool-Versionen wurden beim Projekt-Setup verwendet und getestet (Stand: Juni 2025):
 
-- Python: 3.11.9
 - Robot Framework: 7.3.1
 - SeleniumLibrary: 6.7.1
 - Selenium: 4.21.0
 - mysql-connector-python: 9.3.0
 - Robocop: 3.4.0
-- geckodriver: 0.36.0
-- VSCode: 1.101.2 mit Robocorp Extension 1.13.0
-- Docker Desktop: 28.2.2
-- WSL: Version 2
 - MySQL (Docker): 8.2.27
 - phpMyAdmin (Docker): 5.2.2
 
@@ -74,11 +66,12 @@ Die nachfolgenden Tool-Versionen wurden beim Projekt-Setup verwendet und geteste
     docker-compose -f ./docker/docker-compose.yml up -d
 ```
 
-### 2.6  Erstelle Tabelle in DB
-```pwsh
-    python '.\db\create_purchase.py'
-```
-#### 2.6.1   Datenbankkonfiguration
+#### 2.5.1   phpMyAdmin
+
+- Erreichbar unter: http://localhost:8080
+- Zugangsdaten wie oben aufgeführt
+
+#### 2.5.2   Datenbankkonfiguration
 
 - Host: localhost
 - Port: 3306
@@ -86,10 +79,10 @@ Die nachfolgenden Tool-Versionen wurden beim Projekt-Setup verwendet und geteste
 - Passwort: ********
 - Datenbank: swaglabs
 
-#### 2.6.2   phpMyAdmin
-
-- Erreichbar unter: http://localhost:8080
-- Zugangsdaten wie oben aufgeführt
+### 2.6  Tabelle in DB erstellen
+```pwsh
+    python '.\db\create_purchase.py'
+```
 <br><br>
 
 ## 3 Testausführung
@@ -115,4 +108,6 @@ robot --outputdir "$resultsPath" --include purchase tests/
 
 - Der Port 3306 darf nicht von anderen Anwendungen belegt sein.
 - Docker Desktop und WSL müssen vor der Verwendung gestartet bzw. verfügbar sein.
-- Für den Zugriff auf die Datenbank wurden eigene SQL-Keywords innerhalb von Robot Framework implementiert. Eine externe Bibliothek wie DatabaseLibrary wird nicht verwendet.
+- Für den Zugriff auf die Datenbank wurden eigene SQL-Keywords innerhalb von Robot Framework implementiert.
+- Eine externe Bibliothek wie DatabaseLibrary wird nicht verwendet.
+- MySQL Server und phpMyAdmin werden im Projekt als Docker-Container bereitgestellt und müssen nicht separat installiert werden.

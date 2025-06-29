@@ -3,6 +3,7 @@ Documentation       Event Log Keywords
 
 Library             Collections
 Library             Process
+Library             ./python/insert_purchase.py
 
 
 *** Variables ***
@@ -29,9 +30,7 @@ Save Entries To Database
         ${price}=    Set Variable    ${purchase['price']}
 
         IF    $errors == []
-            ${run}=    Run Process
-            ...    python
-            ...    ../../../db/insert_purchase.py
+            Insert Purchase To Db
             ...    ${testcase}
             ...    ${user}
             ...    ${product_name}
@@ -39,8 +38,6 @@ Save Entries To Database
             ...    PASS
             ...    ${None}
             ...    ${None}
-            ...    shell=True
-            ...    cwd=${CURDIR}
         END
         FOR    ${error}    IN    @{errors}
             ${err}=    Set Variable    ${error['error']}
@@ -51,9 +48,7 @@ Save Entries To Database
             ELSE
                 ${result}=    Set Variable    ${None}
             END
-            ${run}=    Run Process
-            ...    python
-            ...    ../../../db/insert_purchase.py
+            Insert Purchase To Db
             ...    ${testcase}
             ...    ${user}
             ...    ${product_name}
@@ -61,8 +56,6 @@ Save Entries To Database
             ...    ${result}
             ...    ${err}
             ...    ${error_description}
-            ...    shell=True
-            ...    cwd=${CURDIR}
         END
     END
 

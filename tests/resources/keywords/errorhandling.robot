@@ -18,7 +18,7 @@ Run Error Check
     TRY
         Run Keyword    ${step_keyword}    @{args}
     EXCEPT    AS    ${error}
-        Create Error Describtion    ${error}
+        Create Error Description    ${error}
         Fail    ${error}
     FINALLY
         Check For New JavaScript Errors    ${before}
@@ -28,26 +28,26 @@ Read Geckodriver Log
     [Documentation]    Get the latest Geckodriver Log, reading and return the complete log
 
     ${geckopath}=    Get Latest Geckodriver Log
-    ${before}=    Read Latest Geckodriver Log    ${geckopath}
+    ${actually}=    Read Latest Geckodriver Log    ${geckopath}
 
-    RETURN    ${before}
+    RETURN    ${actually}
 
  Check For New JavaScript Errors
     [Documentation]    Get the latest Geckodriver Log, reading and extract JavaScript errors.
-    ...    In connection create an error describtion
+    ...    In connection create an error description
     [Arguments]    ${before}
 
     Sleep    2s
-    ${geckopath}=    Get Latest Geckodriver Log
-    ${after}=    Read Latest Geckodriver Log    ${geckopath}
+
+    ${after}=    Read Geckodriver Log
     @{unique_errors}=    Extract The Current JavaScript Error    ${after}    ${before}
 
     FOR    ${error}    IN    @{unique_errors}
-        Create Error Describtion
+        Create Error Description
         ...    ${error}
     END
 
-Create Error Describtion
+Create Error Description
     [Documentation]    Convert error messages into understandable texts from ERROR_MAP
     [Arguments]    ${error}
 
