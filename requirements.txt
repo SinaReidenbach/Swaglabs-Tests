@@ -1,5 +1,5 @@
-robotframework
-robotframework-robocop
-robotframework-seleniumlibrary
-selenium
-mysql-connector-python
+robotframework==7.3.1
+robotframework-robocop==6.5.0
+robotframework-seleniumlibrary==6.7.1
+selenium==4.33.0
+mysql-connector-python==9.3.0

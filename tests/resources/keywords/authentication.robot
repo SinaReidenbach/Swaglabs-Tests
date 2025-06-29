@@ -1,22 +1,12 @@
 *** Settings ***
-Library     Collections
-Library     SeleniumLibrary
-Resource    ../keywords/util_keywords.robot
-Resource    ../data/login_data.resource
+Documentation       Authentication Keywords
+
+Library             SeleniumLibrary
 
 
 *** Keywords ***
-Get Password
-    [Arguments]    ${user}
-
-    ${password}=
-    ...    Get From Dictionary
-    ...    ${ACCOUNTS}
-    ...    ${user}
-
-    RETURN    ${password}
-
 Input Login Data
+    [Documentation]    Fill the Form with username and password
     [Arguments]    ${user}    ${password}
 
     Input Text
@@ -27,16 +17,8 @@ Input Login Data
     ...    id=password
     ...    ${password}
 
-Login With Valid Credentials
-    [Arguments]    ${username}    ${password}
-
-    Input Text
-    ...    id=user-name
-    ...    ${username}
-
-    Input Text
-    ...    id=password
-    ...    ${password}
+Click Login Button
+    [Documentation]    Click Login-Button and proof if error visible -> Fail if error visible
 
     Click Button    id=login-button
     Sleep    1s
@@ -55,25 +37,38 @@ Login With Valid Credentials
         ${message}=
         ...    Get Text
         ...    css=.error-message-container
-
         Fail    ${message}
     ELSE IF    not ${menu_visible}
-        Fail    Login fehlgeschlagen: Weder Menü noch Fehlermeldung sichtbar – unbekannter Zustand
+        Fail    Login fehlgeschlagen: Weder Menü noch Fehlermeldung sichtbar - unbekannter Zustand
     END
 
-Logout
-    Sleep    0.5s
+Login With Valid Credentials
+    [Documentation]    Login with valid credentials from &{ACCOUNT}
+    [Arguments]    ${user}    ${password}
 
+    Input Login Data    ${user}    ${password}
+    Click Login Button
+
+Click Burger Menu
+    [Documentation]    Sleep 0,5sec, wait for visibility of burger-menu and click it
+
+    Sleep    0.5s
     Wait Until Element Is Visible
     ...    id=react-burger-menu-btn
     ...    timeout=5s
-
     Click Element    id=react-burger-menu-btn
 
+Click Logout
+    [Documentation]    Sleep 0,5sec, wait for visibility of logout in sidebar and click it
     Sleep    0.5s
 
     Wait Until Element Is Visible
     ...    id=logout_sidebar_link
     ...    timeout=5s
-
     Click Element    id=logout_sidebar_link
+
+Logout
+    [Documentation]    Call the keywords "Burger Menu" and "Click Logout"
+
+    Click Burger Menu
+    Click Logout

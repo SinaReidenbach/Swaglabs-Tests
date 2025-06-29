@@ -1,45 +1,40 @@
 *** Settings ***
-Resource            resources/keywords/purchase_keywords.robot
-Resource            resources/keywords/errorhandling_keywords.robot
+Documentation       Purchase Test
+
+Resource            resources/keywords/purchase.robot
+Resource            resources/keywords/authentication.robot
+Resource            resources/data/login.resource
+Resource            resources/keywords/errorhandling.robot
 
 Suite Setup         Open Browser To Login Page
 Suite Teardown      Close Browser
 
 
 *** Test Cases ***
-Purchase With All Users   # robocop: off=too-long-test-case,too-many-calls-in-test-case
+Test Purchase With All Users
     [Documentation]    Tests purchase per user and logs clear and original errors to the database if any occur.
     ...    user which cannot log in will except
+    [Tags]    purchase
 
     FOR    ${user}    ${password}    IN    &{ACCOUNTS}
+        Init EventLog Per User    ${user}
         TRY
-            Login With Valid Credentials
-            ...    ${user}
-            ...    ${password}
+            Login With Valid Credentials    ${user}    ${password}
         EXCEPT
             CONTINUE
         END
 
-        Log    Aktueller Testnutzer: ${user}
         TRY
-            Add Item And Go To Cart
-
-            ${product_name}    ${price}=
-            ...    Get Product Info
-
-            Checkout
-
-            Finish And Save
-            ...    ${user}
-            ...    ${product_name}
-            ...    ${price}
+            Run Error Check    Add Item And Go To Cart
+            ${product_name}    ${price}=    Get Product Info
+            Run Error Check    Checkout
+            Run Error Check    Finish Purchase
+            Set Purchase Entries    ${product_name}    ${price}
         EXCEPT    AS    ${error}
-            Error Message
-            ...    ${user}
-            ...    ${error}
-
+            Run Keyword And Ignore Error    Remove All Items From Cart    ${user}
             CONTINUE
         FINALLY
+            Save Entries To Database
             Run Keyword And Ignore Error    Logout
         END
     END
