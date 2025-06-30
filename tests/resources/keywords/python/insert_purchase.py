@@ -13,7 +13,7 @@ def insert_purchase_to_db(testcase, username, product_name, price, result, error
     )
 
     connection = mysql.connector.connect(
-        host="localhost",
+        host="127.0.0.1",
         user="swaguser",
         password="swagpass",
         database="swaglabs",
